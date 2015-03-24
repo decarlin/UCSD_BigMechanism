@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import ndexClient as nc
 import networkx as nx
 import re, math, os, sys, operator, random
@@ -5,9 +7,13 @@ from scipy.sparse import coo_matrix
 #from scipy.linalg import expm
 import imp
 #import kernel_scipy
+from optparse import OptionParser
 
-util=imp.load_source('ndexUtil','/Users/danielcarlin/projects/ndex-python-client/ndexUtil.py')
-kernel=imp.load_source('kernel_scipy','/Users/danielcarlin/projects/TieDIE/lib/kernel_scipy.py')
+
+schema=imp.load_source('ndexSchema','ndexSchema.py')
+util=imp.load_source('ndexUtil','ndexUtil.py')
+nc=imp.load_source('ndexClient','ndexClient.py')
+kernel=imp.load_source('kernel_scipy','kernel_scipy.py')
 
 class TableEntityMapper:
     """This class is a container for a mapping table between two namespaces.
@@ -221,55 +227,71 @@ def queryVector(query,labels):
             out[i]=0
     return out
 
-lib_path = os.path.abspath('/Users/danielcarlin/projects/TieDIE/lib')
-sys.path.append(lib_path)
 
-gene_file='some_genes.txt'
-
-f=open(gene_file,'r')
-
-get_these=[]
-
-for line in f:
-    get_these.append(line.rstrip())
-
-requestString=" ".join(get_these)
-
-myNdex = nc.Ndex("http://test.ndexbio.org", username='decarlin', password='perfect6')
-
-#nets = myNdex.findNetworks(searchString=requestString)
+if __name__ == "__main__":
+    parser=OptionParser()
+    parser.add_option("-q", "--query", dest="query", action="store", type="string", help="File containining a list of query genes")
+    parser.add_option("-s", "--sif", dest="sif", action ="store", type = "string", default = "out.sif", help="Output file for intermediate sif, translated to HGNC")
+    parser.add_option("-k", "--kernel", dest="kernel",action="store", type="string",default="kernel.txt", help="Output file for kernel")
+    parser.add_option("-t", "--diffusion-time", dest="diffusion_time", type="float", default=0.1 , help="Time parameter (scale) for diffusion.  Default is 0.1") 
+    parser.add_option("-d", "--diffused-query", dest="diffused_query", type="string", default="diffused.txt", help="Output file for diffused query.")
+    parser.add_option("-u", "--username", dest="username", type="string", default=None , help="NDEx username")
+    parser.add_option("-p", "--password", dest="password", type="string", default=None, help="NDEx password")
+    parser.add_option("-n", "--network-uuid", dest="network_uuid", type="string", default="1b0d7c38-a10e-11e4-b590-000c29873918", help="uuid of query, default is for the BEL large corpus")
+    parser.add_option("-m", "--mgi-mapping-table", dest="mgi", type="string", default="bel_MGItoHGNC.tab", help="file with MGI to HGNC mapping table")
+    parser.add_option("-r", "--rgd-mapping-table", dest="rgd", type="string", default="bel_RGCtoHGNC.tab", help="file with RGC to HGNC mapping table")
 
 
-#myNet = myNdex.getNetworkByEdges("63177354-433b-11e4-9369-90b11c72aefa", 0 , 25)
+    (opts,args)=parser.parse_args()
 
-myNet = myNdex.getNeighborhood('1b0d7c38-a10e-11e4-b590-000c29873918', requestString, searchDepth=1)
 
-network=util.ndexPropertyGraphNetworkToNetworkX(myNet)
+#lib_path = os.path.abspath('/Users/danielcarlin/projects/TieDIE/lib')
+#sys.path.append(lib_path)
 
-wrapped=NdexToGeneSif(myNet)
+    gene_file=opts.query
 
-MGImapper=TableEntityMapper('/Users/danielcarlin/Data/orthology_mappings/bel_MGItoHGNC.tab')
-RGDmapper=TableEntityMapper('/Users/danielcarlin/Data/orthology_mappings/bel_RGDtoHGNC.tab')
+    f=open(gene_file,'r')
 
-wrapped.writeSIF('out2.sif')
+    get_these=[]
 
-ker=kernel.SciPYKernel('out2.sif', time_T=0.01)
+    for line in f:
+        get_these.append(line.rstrip())
 
-ker.writeKernel('kernel2.txt')
+        requestString=" ".join(get_these)
 
-queryVec=queryVector(get_these,ker.labels)
+    if opts.password is not None:
+        myNdex = nc.Ndex("http://test.ndexbio.org", username='decarlin', password='perfect6')
+    else:
+        myNdex = nc.Ndex("http://test.ndexbio.org")
 
-diffused=ker.diffuse(queryVec)
+        myNet = myNdex.getNeighborhood(opts.network_uuid, requestString, searchDepth=1)
 
-import operator
+        network=util.ndexPropertyGraphNetworkToNetworkX(myNet)
 
-sorted_diffused = sorted(diffused.items(), key=operator.itemgetter(1), reverse=True)
+        wrapped=NdexToGeneSif(myNet)
 
-import csv
+        MGImapper=TableEntityMapper(opts.mgi)
+        RGDmapper=TableEntityMapper(opts.rgd)
 
-writer = csv.writer(open('diffused2.txt', 'wb'))
-for key, value in sorted_diffused:
-   writer.writerow([key, value])
+        wrapped.writeSIF(opts.sif)
+
+        ker=kernel.SciPYKernel(opts.sif, time_T=opts.diffusion_time)
+
+        ker.writeKernel(opts.kernel)
+
+        queryVec=queryVector(get_these,ker.labels)
+
+        diffused=ker.diffuse(queryVec)
+
+        import operator
+
+        sorted_diffused = sorted(diffused.items(), key=operator.itemgetter(1), reverse=True)
+
+        import csv
+
+        writer = csv.writer(open(opts.diffused_query, 'wb'))
+        for key, value in sorted_diffused:
+            writer.writerow([key, value])
 
 #A=nx.adjacency(network)
 

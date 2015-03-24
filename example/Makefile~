@@ -1,0 +1,2 @@
+diffused.txt: some_genes.txt
+	../automateHeatKernel.py -q some_genes.txt -m /Users/danielcarlin/Data/orthology_mappings/bel_MGItoHGNC.tab -r /Users/danielcarlin/Data/orthology_mappings/bel_RGDtoHGNC.tab

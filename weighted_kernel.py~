@@ -145,7 +145,7 @@ if __name__=="__main__":
     for line in f:
         get_these.append(line.rstrip())
 
-    ker = WeightedSciPYKernel('example/weighted.sif', time_T=0.01)
+    ker = WeightedSciPYKernel('example/weighted.sif', time_T=0.1)
     ker.writeKernel('example/weighted_heat_kernel.txt')
 
     queryVec=auto_diff.queryVector(get_these,ker.labels)
@@ -157,6 +157,6 @@ if __name__=="__main__":
 
     import csv
 
-    writer = csv.writer(open('example/diffused_pancreas_weghted.txt', 'wb'))
+    writer = csv.writer(open('example/diffused_pancreas_weighted.txt', 'wb'),lineterminator="\n")
     for key, value in sorted_diffused:
         writer.writerow([key, value])

@@ -8,12 +8,16 @@ from scipy.sparse import coo_matrix
 import imp
 #import kernel_scipy
 from optparse import OptionParser
-
-
-schema=imp.load_source('ndexSchema','ndexSchema.py')
-util=imp.load_source('ndexUtil','ndexUtil.py')
-nc=imp.load_source('ndexClient','ndexClient.py')
-kernel=imp.load_source('kernel_scipy','kernel_scipy.py')
+import csv
+import numpy as np
+#schema=imp.load_source('ndexSchema','ndexSchema.py')
+import ndexSchema as schema
+#util=imp.load_source('ndexUtil','ndexUtil.py')
+import ndexUtil as util
+#nc=imp.load_source('ndexClient','ndexClient.py')
+import ndexClient as nc
+#kernel=imp.load_source('kernel_scipy','kernel_scipy.py')
+import kernel_scipy as kernel
 
 class TableEntityMapper:
     """This class is a container for a mapping table between two namespaces.
@@ -41,9 +45,13 @@ class TableEntityMapper:
         except:
             return self.missingStrList
 
-def mapByPrefixToHGNC(i,MGImapper, RGDmapper):
+def mapByPrefix(i, MGImapper, RGDmapper, HGNCmapper=None, targetPrefix='hgnc:'):
     st = i.lower()
-    if st.startswith('mgi:'):
+    if st.startswith(targetPrefix):
+        hgout=[i[len(targetPrefix):len(i)]]
+    elif st.startswith('hgnc:'):
+        hgout=HGNCmapper.map(i[5:len(i)])
+    elif st.startswith('mgi:'):
         hgout=MGImapper.map(i[4:len(i)])
     elif st.startswith('rgd:'):
         hgout=RGDmapper.map(i[4:len(i)])
@@ -51,13 +59,13 @@ def mapByPrefixToHGNC(i,MGImapper, RGDmapper):
         hgout=[i]
     return hgout
 
-def filterByPrefix(l):
+def filterByPrefix(l,targetPrefix='hgnc:'):
     out = []
     for i in l:
         st = i.lower()
         if not st.startswith('bel:'):
-            if st.startswith('hgnc:'):
-                out.append(i[5:len(i)])
+            if st.startswith(targetPrefix):
+                out.append(i[len(targetPrefix):len(i)])
             else:
                 out.append(i)
     return out
@@ -113,17 +121,17 @@ class NdexToGeneSif(util.NetworkWrapper):
        if objectId in self.nodeBaseterms:
            objectBasetermList = self.nodeBaseterms[objectId]
        predicateId = edge['predicateId']
-       predicateLabel = util.stripPrefixes(self.getTermLabel(predicateId))
+       predicateLabel = util.stripPrefixes(self.getTermLabel(predicateId),targetPrefix=prefix)
        sifTriples=[]
 
        subjMapped=[]
        for subj in subjectBasetermList:
-           subjMapped.extend(mapByPrefixToHGNC(subj,MGImapper,RGDmapper))
+           subjMapped.extend(mapByPrefix(subj,MGImapper,RGDmapper, HGNCmapper,targetPrefix=prefix))
        subjMapped=filterByPrefix(subjMapped)
 
        objMapped=[]
        for obj in objectBasetermList:
-           objMapped.extend(mapByPrefixToHGNC(obj,MGImapper,RGDmapper))
+           objMapped.extend(mapByPrefix(obj,MGImapper,RGDmapper, HGNCmapper,targetPrefix=prefix))
        objMapped=filterByPrefix(objMapped)
 
        for subj in subjMapped:
@@ -220,13 +228,47 @@ class NdexToGeneSif(util.NetworkWrapper):
 
 def queryVector(query,labels):
     out={}
+    weight_sum = 0.0
     for i in labels:
         if i in query:
-            out[i]=1
+            out[i]=1.0
+            weight_sum += 1.0
         else:
-            out[i]=0
+            out[i]=0.0
+
+    for i in labels:
+        out[i]=out[i]/weight_sum
+    
     return out
 
+def weightedQueryVector(query, labels, weights):
+    out={}
+    weight_sum=0
+    for i in labels:
+        if i in query:
+            try:
+                out[i]=weights[i]
+                weight_sum += weights[i]
+            except KeyError:
+                out[i]=1
+                weight_sum += 1
+        else:
+            out[i]=0
+    
+    for i in labels:
+        out[i]=np.float32(out[i]/weight_sum)
+
+    return out
+
+
+def readNodeWeights(filename):
+    weights={}
+    for line in csv.reader(open(filename,'rb'),delimiter='\t'):
+        try:
+            weights[line[0]]=np.float32(line[1])
+        except ValueError:
+            weights[line[0]]=np.float32(line[1])
+    return weights
 
 if __name__ == "__main__":
     parser=OptionParser()
@@ -237,9 +279,12 @@ if __name__ == "__main__":
     parser.add_option("-d", "--diffused-query", dest="diffused_query", type="string", default="diffused.txt", help="Output file for diffused query.")
     parser.add_option("-u", "--username", dest="username", type="string", default=None , help="NDEx username")
     parser.add_option("-p", "--password", dest="password", type="string", default=None, help="NDEx password")
-    parser.add_option("-n", "--network-uuid", dest="network_uuid", type="string", default="1b0d7c38-a10e-11e4-b590-000c29873918", help="uuid of query, default is for the BEL large corpus")
-    parser.add_option("-m", "--mgi-mapping-table", dest="mgi", type="string", default="bel_MGItoHGNC.tab", help="file with MGI to HGNC mapping table")
-    parser.add_option("-r", "--rgd-mapping-table", dest="rgd", type="string", default="bel_RGCtoHGNC.tab", help="file with RGC to HGNC mapping table")
+    parser.add_option("-n", "--network-uuid", dest="network_uuid", type="string", default="7e57f74d-a39b-11e4-bda0-000c29202374", help="uuid of query, default is for the BEL large corpus")
+    parser.add_option("-m", "--mgi-mapping-table", dest="mgi", type="string", default="bel_MGItoHGNC.tab", help="file with MGI to target species mapping table")
+    parser.add_option("-r", "--rgd-mapping-table", dest="rgd", type="string", default="bel_RGDtoHGNC.tab", help="file with RGC to target species mapping table")
+    parser.add_option("-H", "--hgnc-mapping-table", dest="hgnc", type="string", default=None, help="file with HGNC to target species mapping table")
+    parser.add_option("-b", "--bel-file", dest="bel", type="string", default=None)
+    parser.add_option("-S", "--species", dest="species", type="string", default="human", help="Target species to map to.  Default is 'human', other options right now are 'rat' and 'mouse'")
 
 
     (opts,args)=parser.parse_args()
@@ -247,6 +292,24 @@ if __name__ == "__main__":
 
 #lib_path = os.path.abspath('/Users/danielcarlin/projects/TieDIE/lib')
 #sys.path.append(lib_path)
+
+    if (opts.species == 'human'):
+        MGImapper=TableEntityMapper(opts.mgi)
+        RGDmapper=TableEntityMapper(opts.rgd)
+        HGNCmapper=None
+        prefix='hgnc:'
+    elif (opts.species == 'mouse'):
+        HGNCmapper=TableEntityMapper(opts.hgnc)
+        RGDmapper=TableEntityMapper(opts.rgd)
+        MGImapper=None
+        prefix='mgi:'
+    elif (opts.species == 'rat'):
+        MGImapper=TableEntityMapper(opts.mgi)
+        HGNCmapper=TableEntityMapper(opts.hgnc)
+        RGDmapper=None
+        prefix='rgd:'
+    else:
+        sys.exit("Unrecognized species.  Please choose mouse, rat or human.")
 
     gene_file=opts.query
 
@@ -260,38 +323,38 @@ if __name__ == "__main__":
         requestString=" ".join(get_these)
 
     if opts.password is not None:
-        myNdex = nc.Ndex("http://test.ndexbio.org", username='decarlin', password='perfect6')
+        myNdex = nc.Ndex("http://ndexbio.org", username='decarlin', password='perfect6')
     else:
-        myNdex = nc.Ndex("http://test.ndexbio.org")
+        myNdex = nc.Ndex("http://ndexbio.org")
 
-        myNet = myNdex.getNeighborhood(opts.network_uuid, requestString, searchDepth=1)
+    myNet = myNdex.getNeighborhood(opts.network_uuid, requestString, searchDepth=1)
 
-        network=util.ndexPropertyGraphNetworkToNetworkX(myNet)
+    network=util.ndexPropertyGraphNetworkToNetworkX(myNet)
 
-        wrapped=NdexToGeneSif(myNet)
+    wrapped=NdexToGeneSif(myNet)
 
-        MGImapper=TableEntityMapper(opts.mgi)
-        RGDmapper=TableEntityMapper(opts.rgd)
+    wrapped.writeSIF(opts.sif)
+        
+    if opts.bel is not None:
+        wrapped.writeBELScript(fileName=opts.bel)
 
-        wrapped.writeSIF(opts.sif)
+    ker=kernel.SciPYKernel(opts.sif, time_T=opts.diffusion_time)
 
-        ker=kernel.SciPYKernel(opts.sif, time_T=opts.diffusion_time)
+    ker.writeKernel(opts.kernel)
+    
+    queryVec=queryVector(get_these,ker.labels)
 
-        ker.writeKernel(opts.kernel)
+    diffused=ker.diffuse(queryVec)
 
-        queryVec=queryVector(get_these,ker.labels)
+    import operator
 
-        diffused=ker.diffuse(queryVec)
+    sorted_diffused = sorted(diffused.items(), key=operator.itemgetter(1), reverse=True)
 
-        import operator
+    writer = csv.writer(open(opts.diffused_query, 'wb'))
+    for key, value in sorted_diffused:
+        writer.writerow([key, value])
 
-        sorted_diffused = sorted(diffused.items(), key=operator.itemgetter(1), reverse=True)
 
-        import csv
-
-        writer = csv.writer(open(opts.diffused_query, 'wb'))
-        for key, value in sorted_diffused:
-            writer.writerow([key, value])
 
 #A=nx.adjacency(network)
 

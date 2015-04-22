@@ -1,2 +1,17 @@
+stem_example.txt: mouse_GO_regulation_of_stem_cell_maintenence_IntAct.txt
+	../automateHeatKernel.py -q mouse_GO_regulation_of_stem_cell_maintenence.txt -H /Users/danielcarlin/Data/orthology_mappings/bel_HGNCtoMGI.tab -r /Users/danielcarlin/Data/orthology_mappings/bel_RGDtoMGI.tab -d diffused_stem.txt -S 'mouse' -n fd15a70a-c7b5-11e4-951c-000c29cb28fb
+
+stem_example.txt: mouse_GO_regulation_of_stem_cell_maintenence.txt
+	../automateHeatKernel.py -q mouse_GO_regulation_of_stem_cell_maintenence.txt -H /Users/danielcarlin/Data/orthology_mappings/bel_HGNCtoMGI.tab -r /Users/danielcarlin/Data/orthology_mappings/bel_RGDtoMGI.tab -d diffused_stem.txt -S 'mouse'
+
+pancrease_wighted_example:
+	cut.pl -f 1,3 ~/projects/cell_context_mask/GTEx_pancreas_rpkm_stats.tab \
+	| join.pl -o 'NA' diffused_pancreas_weighted.txt - \
+	> pancrease_wighted_example.tab
+
 diffused.txt: some_genes.txt
 	../automateHeatKernel.py -q some_genes.txt -m /Users/danielcarlin/Data/orthology_mappings/bel_MGItoHGNC.tab -r /Users/danielcarlin/Data/orthology_mappings/bel_RGDtoHGNC.tab
+
+with_bel: some_genes.txt
+	../automateHeatKernel.py -q some_genes.txt -m /Users/danielcarlin/Data/orthology_mappings/bel_MGItoHGNC.tab -r /Users/danielcarlin/Data/orthology_mappings/bel_RGDtoHGNC.tab -b out.bel
+

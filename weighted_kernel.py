@@ -157,6 +157,6 @@ if __name__=="__main__":
 
     import csv
 
-    writer = csv.writer(open('example/diffused_pancreas_weghted.txt', 'wb'))
+    writer = csv.writer(open('example/diffused_pancreas_weighted.txt', 'wb'),lineterminator="\n", delimiter='\t')
     for key, value in sorted_diffused:
         writer.writerow([key, value])

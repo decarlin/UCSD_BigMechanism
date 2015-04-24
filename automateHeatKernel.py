@@ -270,6 +270,22 @@ def readNodeWeights(filename):
             weights[line[0]]=np.float32(line[1])
     return weights
 
+def readSif(filename):
+    triples=[]
+    for line in csv.reader(open(filename,'rb'),delimiter='\t'):
+        triples.append(line)
+    return triples
+
+def filterSif(triples,scores,desired_nodes=30):
+    nodes_made_the_cut=[sorted(scores.items(), key=operator.itemgetter(1), reverse=True)][0:(desired_nodes+1)]
+    edges_made_the_cut=[]
+    for tr in triples:
+        if (tr[0] in nodes_made_the_cut) and tr[2] in nodes_made_the_cut):
+            edges_made_the_cut.append(tr)
+
+    return edges_made_the_cut
+
+
 if __name__ == "__main__":
     parser=OptionParser()
     parser.add_option("-q", "--query", dest="query", action="store", type="string", help="File containining a list of query genes")
@@ -354,6 +370,8 @@ if __name__ == "__main__":
     for key, value in sorted_diffused:
         writer.writerow([key, value])
 
+    scores=readNodeWeights(opts.diffused_query)
+    ints=
 
 
 #A=nx.adjacency(network)

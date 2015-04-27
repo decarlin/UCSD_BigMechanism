@@ -277,12 +277,11 @@ def readSif(filename):
     return triples
 
 def filterSif(triples,scores,desired_nodes=30):
-    nodes_made_the_cut=[sorted(scores.items(), key=operator.itemgetter(1), reverse=True)][0:(desired_nodes+1)]
+    nodes_made_the_cut=[sorted(scores.items(), key=operator.itemgetter(1), reverse=True)][0:(desired_nodes)]
     edges_made_the_cut=[]
     for tr in triples:
-        if (tr[0] in nodes_made_the_cut) and tr[2] in nodes_made_the_cut):
+        if (tr[0] in nodes_made_the_cut) and (tr[2] in nodes_made_the_cut):
             edges_made_the_cut.append(tr)
-
     return edges_made_the_cut
 
 
@@ -309,6 +308,7 @@ if __name__ == "__main__":
 #lib_path = os.path.abspath('/Users/danielcarlin/projects/TieDIE/lib')
 #sys.path.append(lib_path)
 
+    #establishes orthology mappers
     if (opts.species == 'human'):
         MGImapper=TableEntityMapper(opts.mgi)
         RGDmapper=TableEntityMapper(opts.rgd)
@@ -327,6 +327,8 @@ if __name__ == "__main__":
     else:
         sys.exit("Unrecognized species.  Please choose mouse, rat or human.")
 
+
+    #read in the query genes and build the request string
     gene_file=opts.query
 
     f=open(gene_file,'r')
@@ -336,8 +338,9 @@ if __name__ == "__main__":
     for line in f:
         get_these.append(line.rstrip())
 
-        requestString=" ".join(get_these)
+    requestString=" ".join(get_these)
 
+    #establishes connections to ndex.  Search via direct neighbors
     if opts.password is not None:
         myNdex = nc.Ndex("http://ndexbio.org", username='decarlin', password='perfect6')
     else:
@@ -347,6 +350,7 @@ if __name__ == "__main__":
 
     network=util.ndexPropertyGraphNetworkToNetworkX(myNet)
 
+    #convert Ndex to sif, mapping orthology and collapsing baseterms
     wrapped=NdexToGeneSif(myNet)
 
     wrapped.writeSIF(opts.sif)
@@ -354,10 +358,12 @@ if __name__ == "__main__":
     if opts.bel is not None:
         wrapped.writeBELScript(fileName=opts.bel)
 
+    #calculates the heat kernel
     ker=kernel.SciPYKernel(opts.sif, time_T=opts.diffusion_time)
 
     ker.writeKernel(opts.kernel)
-    
+
+    #establishes and diffuses the query vector
     queryVec=queryVector(get_these,ker.labels)
 
     diffused=ker.diffuse(queryVec)
@@ -370,8 +376,14 @@ if __name__ == "__main__":
     for key, value in sorted_diffused:
         writer.writerow([key, value])
 
+    #filter the sif, leaving only interactions between the top N genes
     scores=readNodeWeights(opts.diffused_query)
-    ints=
+    ints=readSif(opts.sif)
+    filtered=filterSif(ints,scores)
+
+    output=open('filtered.sif', 'wb')
+    for s in filtered:
+        output.write('\t'.join(s)+'\n')
 
 
 #A=nx.adjacency(network)

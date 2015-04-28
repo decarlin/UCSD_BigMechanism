@@ -1,3 +1,5 @@
+targets: diffused.txt
+
 established_kernel: some_genes.txt
 	../multiplyEstablishedKernel.py -k kernel.txt -q some_genes.txt -d diffused_established.txt
 
@@ -13,8 +15,6 @@ pancrease_wighted_example:
 	> pancrease_wighted_example.tab
 
 diffused.txt: some_genes.txt
-	../automateHeatKernel.py -q some_genes.txt -m /Users/danielcarlin/Data/orthology_mappings/bel_MGItoHGNC.tab -r /Users/danielcarlin/Data/orthology_mappings/bel_RGDtoHGNC.tab
+	../automateHeatKernel.py -q some_genes.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab -b out.bel
 
-with_bel: some_genes.txt
-	../automateHeatKernel.py -q some_genes.txt -m /Users/danielcarlin/Data/orthology_mappings/bel_MGItoHGNC.tab -r /Users/danielcarlin/Data/orthology_mappings/bel_RGDtoHGNC.tab -b out.bel
 

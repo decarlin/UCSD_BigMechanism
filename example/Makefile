@@ -3,11 +3,11 @@ targets: diffused.txt
 established_kernel: some_genes.txt
 	../multiplyEstablishedKernel.py -k kernel.txt -q some_genes.txt -d diffused_established.txt
 
-stem_example_intact.txt: mouse_GO_regulation_of_stem_cell_maintenence.txt
-	../automateHeatKernel.py -q mouse_GO_regulation_of_stem_cell_maintenence.txt -H ../mappings/bel_HGNCtoMGI.tab -r ../mappings/bel_RGDtoMGI.tab -d diffused_stem.txt -S 'mouse' -n fd15a70a-c7b5-11e4-951c-000c29cb28fb
+stem_example_human.txt: human_GO_regulation_of_stem_cell_maintenence.txt
+	../automateHeatKernel.py -q human_GO_stem_cell_maintenence.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab -s stem_example_human.sif -d diffused_stem_human.txt -S 'human'
 
 stem_example.txt: mouse_GO_regulation_of_stem_cell_maintenence.txt
-	../automateHeatKernel.py -q mouse_GO_regulation_of_stem_cell_maintenence.txt -H ../mappings/bel_HGNCtoMGI.tab -r ../mappings/bel_RGDtoMGI.tab -d diffused_stem.txt -S 'mouse'
+	../automateHeatKernel.py -q mouse_GO_regulation_of_stem_cell_maintenence.txt -H ../mappings/bel_HGNCtoMGI.tab -r ../mappings/bel_RGDtoMGI.tab -s stem_example.sif -d diffused_stem.txt -S 'mouse'
 
 pancrease_wighted_example:
 	cut.pl -f 1,3 ~/projects/cell_context_mask/GTEx_pancreas_rpkm_stats.tab \
@@ -17,4 +17,5 @@ pancrease_wighted_example:
 diffused.txt: some_genes.txt
 	../automateHeatKernel.py -q some_genes.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab -b out.bel
 
-
+nonbel_example: some_genes.txt
+	../automateHeatKernel.py -q some_genes.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab -n 2950947d-e238-11e4-951c-000c29cb28fb -s nonbel.sif -k nonbel_kernel.txt

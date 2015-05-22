@@ -25,7 +25,7 @@ def stripPrefixes(input, targetPrefix='hgnc:'):
     elif st.startswith(targetPrefix):
 	    return input[len(targetPrefex):len(input)]
     else:
-	    return st
+	    return input
 
 # This is BEL specific, since BEL is the only current user of funciton terms
 def getFunctionAbbreviation(input):

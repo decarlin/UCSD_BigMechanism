@@ -163,9 +163,11 @@ class NdexToGeneSif(util.NetworkWrapper):
             return ["node %s"] % (node['id'])
 
 
-    def writeSIF(self, fileName=None):
-        if fileName:
+    def writeSIF(self, fileName=None, append=False):
+        if fileName and not append:
             output = open(fileName, 'w')
+        elif fileName and append:
+            output = open(fileName, 'a')
         else:
             output = sys.stdout
 
@@ -371,8 +373,8 @@ if __name__ == "__main__":
     requestString = " ".join(get_these)
 
     #establishes connections to ndex.  Search via direct neighbors
-    if opts.password is not None:
-        myNdex = nc.Ndex("http://ndexbio.org", username='decarlin', password='perfect6')
+    if opts.password is not None and opts.username is not None:
+        myNdex = nc.Ndex("http://ndexbio.org", username=opts.password, password=opts.username)
     else:
         myNdex = nc.Ndex("http://ndexbio.org")
 

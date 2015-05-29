@@ -18,7 +18,7 @@ import ndexUtil as util
 import ndexClient as nc
 #kernel=imp.load_source('kernel_scipy','kernel_scipy.py')
 import kernel_scipy as kernel
-
+import operator
 
 class TableEntityMapper:
     """This class is a container for a mapping table between two namespaces.
@@ -199,11 +199,11 @@ class NdexToGeneSif(util.NetworkWrapper):
                         elif namespace['uri']:
                             label = "%s%s" % (namespace['uri'], name)
                         else:
-                            label = name
+                            label = "%s%s" % ('BEL:', name)
                     else:
-                        label = name
+                        label = "%s%s" % ('BEL:', name)
                 else:
-                    label = name
+                    label = "%s%s" % ('BEL:', name)
                 self.basetermMap[termId] = [label]
 
             elif type == "functionterm":
@@ -278,8 +278,11 @@ def weightedQueryVector(query, labels, weights):
 
 def readNodeWeights(filename):
     weights = {}
-    for line in csv.reader(open(filename, 'rb'), delimiter='\t'):
-        weights[line[0]] = float(line[1])
+    for line in csv.reader(open(filename, 'r'), delimiter='\t'):
+        if len(line)==2:
+            weights[line[0]] = float(line[1])
+        else:
+            print "problem line:"+'TAB'.join(line)
     return weights
 
 
@@ -302,7 +305,7 @@ def filterSif(triples, scores, desired_nodes=30):
 
 if __name__ == "__main__":
     parser = OptionParser()
-    parser.add_option("-q", "--query", dest="query", action="store", type="string",
+    parser.add_option("-q", "--query", dest="query", action="store", type="string", default=None,
                       help="File containining a list of query genes")
     parser.add_option("-s", "--sif", dest="sif", action="store", type="string", default="out.sif",
                       help="Output file for intermediate sif, translated to HGNC")
@@ -315,7 +318,7 @@ if __name__ == "__main__":
     parser.add_option("-u", "--username", dest="username", type="string", default=None, help="NDEx username")
     parser.add_option("-p", "--password", dest="password", type="string", default=None, help="NDEx password")
     parser.add_option("-n", "--network-uuid", dest="network_uuid", type="string",
-                      default="7e57f74d-a39b-11e4-bda0-000c29202374",
+                      default="9ea3c170-01ad-11e5-ac0f-000c29cb28fb",
                       help="uuid of query, default is for the BEL large corpus")
     parser.add_option("-m", "--mgi-mapping-table", dest="mgi", type="string", default="bel_MGItoHGNC.tab",
                       help="file with MGI to target species mapping table")
@@ -328,6 +331,8 @@ if __name__ == "__main__":
                       help="Target species to map to.  Default is 'human', other options right now are 'rat' and 'mouse'")
     parser.add_option("-x", "--do-not-map", dest="nomap", action="store_true", default=False,
                       help="Do not do orthology mappings")
+    parser.add_option("-w", "--weighted-query", dest="weighted_query", default=None,
+                      help = "weighted query file.  Expects a column of IDs and a column of scores, no header")
 
     (opts, args) = parser.parse_args()
 
@@ -361,14 +366,17 @@ if __name__ == "__main__":
 
 
     #read in the query genes and build the request string
-    gene_file = opts.query
-
-    f = open(gene_file, 'r')
-
-    get_these = []
-
-    for line in f:
-        get_these.append(line.rstrip())
+    if opts.weighted_query is not None:
+        weighted_query=readNodeWeights(opts.weighted_query)
+        get_these=weighted_query.keys()
+    elif opts.query is not None:
+        gene_file = opts.query
+        f = open(gene_file, 'r')
+        get_these = []
+        for line in f:
+            get_these.append(line.rstrip())
+    else:
+        sys.exit("Please provide a query of weighted query file.")
 
     requestString = " ".join(get_these)
 
@@ -396,11 +404,12 @@ if __name__ == "__main__":
     ker.writeKernel(opts.kernel)
 
     #establishes and diffuses the query vector
-    queryVec = queryVector(get_these, ker.labels)
+    if opts.query is not None:
+        queryVec = queryVector(get_these, ker.labels)
+    elif opts.weighted_query is not None:
+        queryVec = weightedQueryVector(get_these, ker.labels, weighted_query)
 
     diffused = ker.diffuse(queryVec)
-
-    import operator
 
     sorted_diffused = sorted(diffused.items(), key=operator.itemgetter(1), reverse=True)
 

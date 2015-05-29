@@ -1,5 +1,9 @@
 import automateHeatKernel as ahk
 import operator
+from optparse import OptionParser
+import sys
+import ndexClient as nc
+import kernel_scipy as kernel
 
 if __name__ == "__main__":
     parser = OptionParser()
@@ -84,7 +88,7 @@ if __name__ == "__main__":
         for net_line in fn:
             myNet = myNdex.getNeighborhood(net_line, requestString, searchDepth=1)
 
-            wrapped = NdexToGeneSif(myNet, MGImapper=MGImapper, HGNCmapper=HGNCmapper, RGDmapper=RGDmapper, prefix=prefix)
+            wrapped = ahk.NdexToGeneSif(myNet, MGImapper=MGImapper, HGNCmapper=HGNCmapper, RGDmapper=RGDmapper, prefix=prefix)
 
             wrapped.writeSIF(opts.sif, append=True)
 

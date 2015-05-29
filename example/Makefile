@@ -19,3 +19,6 @@ diffused.txt: some_genes.txt
 
 nonbel_example: some_genes.txt
 	../automateHeatKernel.py -q some_genes.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab -n 2950947d-e238-11e4-951c-000c29cb28fb -s nonbel.sif -k nonbel_kernel.txt
+
+weighted_query: some_weighted_genes.txt
+	../automateHeatKernel.py -w some_weighted_genes.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab -b weighted_out.bel

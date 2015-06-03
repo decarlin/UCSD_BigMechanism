@@ -1,9 +1,13 @@
+#!/usr/bin/env python
+
 import automateHeatKernel as ahk
 import operator
 from optparse import OptionParser
 import sys
 import ndexClient as nc
 import kernel_scipy as kernel
+import csv
+
 
 if __name__ == "__main__":
     parser = OptionParser()
@@ -34,6 +38,9 @@ if __name__ == "__main__":
     parser.add_option("-x", "--do-not-map", dest="nomap", action="store_true", default=False,
                       help="Do not do orthology mappings")
     parser.add_option("-c", "--combination-method", dest="comb", type="string", default="sif", help="Method of combining different networks.  Default is 'sif', which creates a single .sif of all networks in the target namespace. Another option is 'kernel', which creates a heat kernel for each network, then multiplies by each in turn, which has the effect of double counting shared edges."  )
+    parser.add_option("-N", "--number-of-entities", dest="entities", type="int", default=30, help="Number of entities to have in the final sif, default  is 30")
+    parser.add_option("-o", "--out-sif", dest="filtered_sif", type="string", default="filtered.sif", help="Filtered output sif.")
+
 
     (opts, args) = parser.parse_args()
 
@@ -85,35 +92,53 @@ if __name__ == "__main__":
     fn = open(opts.network_uuids_file)
 
     if opts.comb == 'sif':
+        num_networks=0.0;
         for net_line in fn:
-            myNet = myNdex.getNeighborhood(net_line, requestString, searchDepth=1)
+            myNet = myNdex.getNeighborhood(net_line.rstrip(), requestString, searchDepth=1)
 
             wrapped = ahk.NdexToGeneSif(myNet, MGImapper=MGImapper, HGNCmapper=HGNCmapper, RGDmapper=RGDmapper, prefix=prefix)
 
             wrapped.writeSIF(opts.sif, append=True)
+            num_networks=num_networks+1
 
         ker = kernel.SciPYKernel(opts.sif, time_T=opts.diffusion_time)
 
         ker.writeKernel(opts.kernel)
 
         #establishes and diffuses the query vector
-        queryVec = queryVector(get_these, ker.labels)
+        queryVec = ahk.queryVector(get_these, ker.labels)
 
         diffused = ker.diffuse(queryVec)
         sorted_diffused = sorted(diffused.items(), key=operator.itemgetter(1), reverse=True)
-    elif:
+    elif opts.comb =='kernel':
+        num_networks=0.0;
+        for net_line in fn:
+            myNet = myNdex.getNeighborhood(net_line, requestString, searchDepth=1)
 
+            wrapped = ahk.NdexToGeneSif(myNet, MGImapper=MGImapper, HGNCmapper=HGNCmapper, RGDmapper=RGDmapper, prefix=prefix)
 
+            wrapped.writeSIF(opts.sif, append=True)
+            num_networks=num_networks+1
+
+            ker = kernel.SciPYKernel(opts.sif, time_T=(opts.diffusion_time/num_networks))
+
+        ker.writeKernel(opts.kernel)
+
+        #establishes and diffuses the query vector
+        queryVec = ahk.queryVector(get_these, ker.labels)
+
+        diffused = ker.diffuse(queryVec)
+        sorted_diffused = sorted(diffused.items(), key=operator.itemgetter(1), reverse=True)
 
     writer = csv.writer(open(opts.diffused_query, 'wb'), delimiter='\t')
     for key, value in sorted_diffused:
         writer.writerow([key, value])
 
         #filter the sif, leaving only interactions between the top N genes
-    scores = readNodeWeights(opts.diffused_query)
-    ints = readSif(opts.sif)
-    filtered = filterSif(ints, scores)
+    scores = ahk.readNodeWeights(opts.diffused_query)
+    ints = ahk.readSif(opts.sif)
+    filtered = ahk.filterSif(ints, scores, desired_nodes=opts.entities)
 
-    output = open('filtered.sif', 'wb')
+    output = open(opts.filtered_sif, 'wb')
     for s in filtered:
         output.write('\t'.join(s) + '\n')

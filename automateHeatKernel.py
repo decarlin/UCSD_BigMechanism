@@ -333,7 +333,8 @@ if __name__ == "__main__":
                       help="Do not do orthology mappings")
     parser.add_option("-w", "--weighted-query", dest="weighted_query", default=None,
                       help = "weighted query file.  Expects a column of IDs and a column of scores, no header")
-
+    parser.add_option("-N", "--number-of-entities", dest="entities", type="int", default=30, help="Number of entities to have in the final sif, default  is 30")
+    parser.add_option("-o", "--out-sif", dest="filtered_sif", type="string", default="filtered.sif", help="Filtered output sif.")
     (opts, args) = parser.parse_args()
 
 
@@ -420,9 +421,9 @@ if __name__ == "__main__":
     #filter the sif, leaving only interactions between the top N genes
     scores = readNodeWeights(opts.diffused_query)
     ints = readSif(opts.sif)
-    filtered = filterSif(ints, scores)
+    filtered = filterSif(ints, scores, desired_nodes=opts.entities)
 
-    output = open('filtered.sif', 'wb')
+    output = open(opts.filtered_sif, 'wb')
     for s in filtered:
         output.write('\t'.join(s) + '\n')
 

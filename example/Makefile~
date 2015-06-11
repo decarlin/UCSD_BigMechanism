@@ -22,3 +22,6 @@ nonbel_example: some_genes.txt
 
 weighted_query: some_weighted_genes.txt
 	../automateHeatKernel.py -w some_weighted_genes.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab -b weighted_out.bel
+
+several_network_query: some_big_networks.txt
+	../multipleHeatKernel.py -q some_genes.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab -s multiple_nets.sif -n some_big_networks.txt 

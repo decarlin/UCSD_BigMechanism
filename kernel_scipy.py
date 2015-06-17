@@ -6,15 +6,19 @@ import math
 from array import array
 from scipy.sparse import coo_matrix
 from scipy.sparse.linalg import expm
+from collections import defaultdict
+import os
 
 class SciPYKernel:
 
-    def __init__(self, network_file, time_T = 0.1):
+    def __init__(self, network, time_T = 0.1):
         """ 
         Input:
 
-            network_file - a tab-delimited file in .sif network format:
+            network: one of the following: - a tab-delimited file in .sif network format:
             <source> <interaction> <target>
+
+            - an iterable (set, list, tuple, etc.) of edges: (<source>, <target>)
 
         Returns:
 
@@ -30,7 +34,23 @@ class SciPYKernel:
         self.nrows = {}
 
         # parse the network, build indexes
-        edges, nodes, node_out_degrees = self.parseNet(network_file)
+        try:
+            # assume network is a filename
+            edges, nodes, node_out_degrees = self.parseNet(network_file)
+
+        except TypeError:
+            # assume network is an edge list
+            edges = set(network)
+            nodes = set()
+            node_out_degrees = defaultdict(int)
+            for source, target in edges:
+                nodes.add(source)
+                nodes.add(target)
+                node_out_degrees[source] += 1
+                node_out_degrees[target] += 1
+
+        # build indexes
+
         num_nodes = len(nodes)
         node_order = list(nodes)
         index2node = {}

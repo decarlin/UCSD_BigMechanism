@@ -14,8 +14,8 @@ from array import array
 from scipy.sparse.linalg import expm
 
 
-kernel=imp.load_source('kernel_scipy','kernel_scipy.py')
-auto_diff = imp.load_source('automateHeatKernel','automateHeatKernel.py')
+import kernel_scipy as kernel
+import automateHeatKernel as ahk
 
 class WeightedSciPYKernel(kernel.SciPYKernel):
     def __init__(self, network_file, time_T=0.1):
@@ -134,6 +134,36 @@ class WeightedSciPYKernel(kernel.SciPYKernel):
         return (edges, nodes, degrees,weights)
 
 
+def log2plus1(x):
+    return(math.log((float(x)+1),2))
+
+def MultiSifToWeightedSif(filename, transform=None, outfile='weighted.sif'):
+    f=open(filename,'r')
+
+    edges = {}
+
+    for line in f:
+        parts = line.rstrip().split('\t')
+        source = parts[0]
+        target = parts[2]
+
+        if source ==target:
+            continue
+        elif ((source, target) or (target,source)) in edges.keys():
+            edges[(source,target)]=edges[(source,target)]+1
+            edges[(target,source)]=edges[(target,source)]+1
+        else:
+            edges[(source,target)]=1
+            edges[(target,source)]=1
+
+    g=open(outfile, 'w')
+
+    for edge,value in edges.iteritems():
+        if not transform:
+            g.write(edge[0]+'\t'+str(value)+'\t'+edge[1]+'\n')
+        else:
+            g.write(edge[0]+'\t'+str(transform(value))+'\t'+edge[1]+'\n')
+
 #main
 if __name__=="__main__":
     gene_file='example/some_genes.txt'
@@ -148,7 +178,7 @@ if __name__=="__main__":
     ker = WeightedSciPYKernel('example/weighted.sif', time_T=0.1)
     ker.writeKernel('example/weighted_heat_kernel.txt')
 
-    queryVec=auto_diff.queryVector(get_these,ker.labels)
+    queryVec=ahk.queryVector(get_these,ker.labels)
     diffused=ker.diffuse(queryVec)
 
     import operator

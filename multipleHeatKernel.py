@@ -7,6 +7,7 @@ import sys
 import ndexClient as nc
 import kernel_scipy as kernel
 import csv
+import weighted_kernel as wk
 
 
 if __name__ == "__main__":
@@ -113,17 +114,19 @@ if __name__ == "__main__":
     elif opts.comb =='kernel':
         num_networks=0.0;
         for net_line in fn:
-            myNet = myNdex.getNeighborhood(net_line, requestString, searchDepth=1)
+            myNet = myNdex.getNeighborhood(net_line.rstrip(), requestString, searchDepth=1)
 
             wrapped = ahk.NdexToGeneSif(myNet, MGImapper=MGImapper, HGNCmapper=HGNCmapper, RGDmapper=RGDmapper, prefix=prefix)
 
-            wrapped.writeSIF(opts.sif, append=True)
+            wrapped.writeSIF('multi.sif', append=True)
+
             num_networks=num_networks+1
 
-            ker = kernel.SciPYKernel(opts.sif, time_T=(opts.diffusion_time/num_networks))
+        wk.MultiSifToWeightedSif('multi.sif',transform=wk.log2plus1, outfile=opts.sif)
+
+        ker = wk.WeightedSciPYKernel(opts.sif, time_T=(opts.diffusion_time/num_networks))
 
         ker.writeKernel(opts.kernel)
-
         #establishes and diffuses the query vector
         queryVec = ahk.queryVector(get_these, ker.labels)
 

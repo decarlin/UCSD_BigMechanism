@@ -6,8 +6,8 @@ established_kernel: some_genes.txt
 stem_example_human.txt: human_GO_regulation_of_stem_cell_maintenence.txt
 	../automateHeatKernel.py -q human_GO_stem_cell_maintenence.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab -s stem_example_human.sif -d diffused_stem_human.txt -S 'human'
 
-stem_example.txt: mouse_GO_regulation_of_stem_cell_maintenence.txt
-	../automateHeatKernel.py -q mouse_GO_regulation_of_stem_cell_maintenence.txt -H ../mappings/bel_HGNCtoMGI.tab -r ../mappings/bel_RGDtoMGI.tab -s stem_example.sif -d diffused_stem.txt -S 'mouse'
+mouse_neural_repair_example.txt: mouse_neural_repair.txt
+	../automateHeatKernel.py -q mouse_neural_repair.txt -H ../mappings/bel_HGNCtoMGI.tab -r ../mappings/bel_RGDtoMGI.tab -s stem_example.sif -d diffused_stem.txt -S 'mouse'
 
 pancrease_wighted_example:
 	cut.pl -f 1,3 ~/projects/cell_context_mask/GTEx_pancreas_rpkm_stats.tab \

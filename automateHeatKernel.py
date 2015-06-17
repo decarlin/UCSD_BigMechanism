@@ -278,7 +278,8 @@ def weightedQueryVector(query, labels, weights):
 
 def readNodeWeights(filename):
     weights = {}
-    for line in csv.reader(open(filename, 'r'), delimiter='\t'):
+    for l in open(filename, 'r'):
+        line=l.rstrip().split('\t')
         if len(line)==2:
             weights[line[0]] = float(line[1])
         else:
@@ -414,16 +415,18 @@ if __name__ == "__main__":
 
     sorted_diffused = sorted(diffused.items(), key=operator.itemgetter(1), reverse=True)
 
-    writer = csv.writer(open(opts.diffused_query, 'wb'), delimiter='\t')
+    f = open(opts.diffused_query, 'w')
     for key, value in sorted_diffused:
-        writer.writerow([key, value])
+        f.write(str(key)+'\t'+str(value)+'\n')
+
+    f.close()
 
     #filter the sif, leaving only interactions between the top N genes
     scores = readNodeWeights(opts.diffused_query)
     ints = readSif(opts.sif)
     filtered = filterSif(ints, scores, desired_nodes=opts.entities)
 
-    output = open(opts.filtered_sif, 'wb')
+    output = open(opts.filtered_sif, 'w')
     for s in filtered:
         output.write('\t'.join(s) + '\n')
 

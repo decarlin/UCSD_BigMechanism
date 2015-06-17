@@ -36,7 +36,7 @@ class SciPYKernel:
         # parse the network, build indexes
         try:
             # assume network is a filename
-            edges, nodes, node_out_degrees = self.parseNet(network_file)
+            edges, nodes, node_out_degrees = self.parseNet(network)
 
         except TypeError:
             # assume network is an edge list

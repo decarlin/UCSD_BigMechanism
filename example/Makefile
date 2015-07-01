@@ -15,7 +15,7 @@ pancrease_wighted_example:
 	> pancrease_wighted_example.tab
 
 diffused.txt: some_genes2.txt
-	../automateHeatKernel.py -q some_genes2.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab -b out.bel
+	../automateHeatKernel.py -q some_genes2.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab
 
 nonbel_example: some_genes.txt
 	../automateHeatKernel.py -q some_genes.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab -n 2950947d-e238-11e4-951c-000c29cb28fb -s nonbel.sif -k nonbel_kernel.txt

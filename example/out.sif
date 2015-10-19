@@ -1,3 +1,4 @@
+RASGRF1	increases	HRAS
 SCHEM:Geldanamycin	decreases	RAF1
 NCH:p85/p110 PI3Kinase Complex	increases	BRAF
 ARAF	directlyIncreases	MAP2K1
@@ -52,8 +53,7 @@ MAPK1	directlyIncreases	FOXO3
 CHEBI:estradiol	increases	MAPK1
 CD74	increases	MAPK1
 MIF	increases	MAPK1
-CD74	increases	MAPK1
-MIF	increases	MAPK1
+MAPK1	directlyIncreases	FOXO3
 PTK2	increases	RAF1
 MAPK1	directlyIncreases	SREBF2
 MAPK1	increases	MESHPP:Apoptosis
@@ -72,6 +72,7 @@ TGFB1	increases	MAPK1
 NRAS	increases	RPS6KB1
 MAP2K1	directlyIncreases	MAP2K1
 MAPK1	directlyIncreases	SH2B1
+KRAS	increases	RPS6KB1
 MAPK1	increases	CCL5
 KIT	increases	MAPK1
 GO:muscle contraction	increases	MEF2D
@@ -99,11 +100,12 @@ GO:microtubule polymerization	decreases	AREG
 FGF2	increases	RAF1
 GO:microtubule polymerization	decreases	ARPC2
 EGID:183	increases	MAPK1
+KRAS	increases	ESR1
 DDR1	increases	MAPK1
 TNFRSF1B	increases	MAPK1
 KDR	increases	MAPK1
 MAPK1	increases	RPS6KA5
-PFH:RAS Family	directlyIncreases	BRAF
+KRAS	increases	CDKN1A
 CHEBI:nicotine	increases	RAF1
 CHEBI:nicotine	increases	RB1
 MAP2K1	increases	RPS6KA5
@@ -196,6 +198,7 @@ RAF1	directlyIncreases	BCL2
 RAF1	directlyIncreases	BCL2
 CHEBI:reactive oxygen species	increases	MAPK1
 NRG1	increases	MAPK1
+KRAS	increases	SDIS:tumor growth
 APP	increases	MAP2K1
 NRG1	increases	MAPK1
 MAPK1	increases	NFKB1
@@ -208,9 +211,11 @@ PFR:Akt Family	decreases	BRAF
 PFH:AKT Family	directlyIncreases	BRAF
 EGF	increases	MAPK1
 RAF1	increases	PFH:MEK1/2 Family
+EGFR	increases	RAF1
 IL18	increases	MAPK1
 RET	directlyIncreases	MAPK1
 FGF2	increases	MAPK1
+FGF2	increases	KRAS
 BRAF	directlyIncreases	BRAF
 BRAF	directlyIncreases	BRAF
 MAPK1	increases	USF1
@@ -252,6 +257,8 @@ MAP2K2	directlyIncreases	MAP2K2
 SLC9A3R2	increases	MAPK1
 LPAR2	increases	MAPK1
 RARRES2	increases	MAPK1
+KRAS	directlyIncreases	KRAS
+KRAS	directlyIncreases	KRAS
 MAP2K2	directlyIncreases	MAP2K2
 GO:response to osmotic stress	increases	MEF2A
 LPAR2	increases	MAPK1
@@ -259,11 +266,14 @@ PFH:MAPK p38 Family	decreases	MAPK1
 PFH:PRKA Family	directlyIncreases	RAF1
 MAPK1	increases	EIF4E
 SCHEM:serum insulin	increases	MAPK1
+CAMK2B	increases	RAF1
 GO:microtubule polymerization	decreases	ACSL5
+KRAS	directlyIncreases	KRAS
 MAPK1	directlyIncreases	GSK3B
 DUSP1	directlyDecreases	MAPK1
 CHEBI:estradiol	increases	MAPK1
 KRAS	directlyIncreases	BRAF
+KRAS	directlyIncreases	PFH:RAF Family
 HRAS	directlyIncreases	BRAF
 CHEBI:insulin	increases	MAPK1
 HRAS	directlyIncreases	ARAF
@@ -271,7 +281,6 @@ CHEBI:insulin	increases	MAPK1
 NRAS	directlyIncreases	ARAF
 NRAS	directlyIncreases	BRAF
 SCHEM:serum insulin	increases	MAPK1
-PTK2	increases	MAP2K1
 SCHEM:serum insulin	increases	MAPK1
 GO:microtubule polymerization	decreases	LIF
 IGFBP7	decreases	MAPK1
@@ -282,12 +291,13 @@ GO:microtubule polymerization	decreases	KYNU
 MAPK1	directlyIncreases	CDKN1B
 BRAF	directlyIncreases	MAP2K1
 BRAF	directlyIncreases	MAP2K2
-EGF	increases	MAPK1
+KRAS	directlyIncreases	KRAS
+RASA4	directlyDecreases	KRAS
 EGF	increases	MAPK1
 BRAF	directlyIncreases	PRKCE
 PRKCE	directlyIncreases	PRKCE
 RPS6KB2	directlyIncreases	PRKCE
-PAK4	decreases	GO:cell proliferation
+PFH:PDGF Family	increases	KRAS
 IL8	increases	MAPK1
 MAPK1	directlyIncreases	NCOA3
 MAPK1	decreases	MESHPP:Apoptosis
@@ -302,10 +312,11 @@ IL8	increases	RAF1
 IL8	increases	ARRB2
 IL8	increases	EGID:3579
 PFH:ADRA2 Family	increases	MAPK1
+KRAS	directlyIncreases	KRAS
 EGID:3630	increases	ATF3
 PDGFB	increases	MAPK1
 PFH:RAS Family	increases	MAPK1
-EGFR	increases	MAPK1
+KRAS	directlyIncreases	KRAS
 RAF1	increases	MAPK1
 CHEBI:gefitinib	decreases	MAPK1
 IL6ST	increases	MAPK1
@@ -331,8 +342,9 @@ RAF1	increases	MAP2K2
 MAPK1	increases	SGK1
 SDIS:cyclic stretch	increases	MAPK1
 RASGRF1	increases	HRAS
+KRAS	directlyIncreases	KRAS
 RAF1	directlyDecreases	RAF1
-MAPK1	directlyIncreases	FOXO3
+SDIS:mechanical stress	increases	MAPK1
 RAF1	decreases	MAPK3
 F2R	increases	MAPK1
 RAF1	directlyIncreases	MAP2K1
@@ -341,6 +353,7 @@ MAP3K8	increases	MAPK1
 MAP2K1	increases	CTNNB1
 MAP2K2	directlyIncreases	MAPK1
 SNTA1	increases	MAPK1
+KRAS	directlyIncreases	KRAS
 PFR:Prka Family	directlyDecreases	RAF1
 NCH:CK II Complex	increases	RAF1
 NCH:CK II Complex	increases	BRAF
@@ -368,6 +381,7 @@ MAP2K2	increases	CHUK
 MAPK1	directlyIncreases	NCOA1
 MAPK1	increases	NCOA1
 IGF1R	increases	GO:skeletal muscle hypertrophy
+HRAS	increases	MAPK3
 MAPK1	increases	GAB1
 FAS	increases	MAPK1
 BRAF	increases	ELK1
@@ -396,6 +410,7 @@ GPER	increases	MAPK1
 CHEBI:estradiol	increases	MAPK1
 GPER	increases	MAPK1
 TNF	increases	MAP2K2
+KRAS	directlyIncreases	KRAS
 HRAS	increases	SDIS:oncogenic transformation
 GO:muscle contraction	increases	MAPK1
 GO:muscle contraction	increases	MAPK1
@@ -432,6 +447,7 @@ PDGFRA	increases	MAPK1
 SCHEM:serum insulin	increases	MAPK1
 SCHEM:serum insulin	increases	MAPK1
 RAF1	directlyIncreases	BAD
+MAP2K2	decreases	CASP9
 BRAF	directlyIncreases	MAP2K2
 GO:microtubule polymerization	decreases	ZFP36L1
 BRAF	directlyIncreases	MAP2K1
@@ -445,6 +461,7 @@ HRAS	decreases	FBXW7
 MAPK1	increases	RPS6KA5
 MAP2K1	increases	MAP2K2
 RAF1	increases	MAP2K2
+MAP2K2	increases	CASP9
 RAF1	increases	MAP2K1
 SCHEM:serum leptin	increases	MAPK1
 EGF	increases	MAPK1
@@ -459,7 +476,7 @@ EGF	increases	MAPK1
 TNFRSF1A	increases	RAF1
 TNFRSF1A	increases	RAF1
 GRB2	increases	RAF1
-HRAS	increases	MAPK3
+CHEBI:ceramide	decreases	MAPK1
 MAPK1	directlyIncreases	MAPK1
 HRAS	increases	MAPK3
 MAP2K2	increases	MAPK1
@@ -473,17 +490,18 @@ SRC	increases	RAF1
 SRC	increases	RB1
 CHEBI:nicotine	increases	RAF1
 CHEBI:nicotine	increases	RB1
-MAP2K1	increases	IKBKB
-PLCB1	increases	MAPK1
-HRAS	increases	CD69
-MAP2K2	decreases	CASP9
+SOS1	directlyIncreases	KRAS
+CHEBI:hydrogen peroxide	increases	CASP7
+KRAS	directlyIncreases	KRAS
+KRAS	directlyIncreases	KRAS
 BRAF	directlyIncreases	BRAF
 HRAS	directlyIncreases	HRAS
 PFH:PRKA Family	directlyIncreases	RAF1
 GRB2	increases	MAPK1
 SOS1	increases	MAPK1
-MAP2K2	increases	CASP9
+KRAS	directlyIncreases	KRAS
 EGID:183	decreases	MEOX2
+KRAS	directlyIncreases	KRAS
 EGID:183	increases	MAPK1
 ITGB1	increases	MAPK1
 RAF1	increases	PFH:MEK1/2 Family
@@ -496,6 +514,7 @@ PFM:Ras Family	directlyIncreases	RAF1
 MAPK1	decreases	SMAD3
 MAPK1	increases	SOCS3
 GO:microtubule polymerization	decreases	LDLR
+MST1R	increases	MAPK1
 PFH:MEK1/2 Family	directlyIncreases	MAP2K1
 PFH:MEK1/2 Family	directlyIncreases	MAP2K1
 CHEBI:hydrogen peroxide	increases	GO:cell death
@@ -506,6 +525,7 @@ APP	increases	MAPK1
 RAF1	decreases	LGALS3
 APP	increases	MAPK1
 MAPK1	directlyIncreases	STMN1
+MAPK1	directlyIncreases	CAD
 GO:microtubule polymerization	decreases	ACTN1
 HRAS	increases	AASDHPPT
 CCR2	increases	MAPK1
@@ -528,13 +548,14 @@ GOCCACC:GO:0005886	directlyDecreases	HRAS
 MAPK1	increases	NCOA1
 MAPK1	increases	USF1
 PTEN	decreases	MAPK1
-SCHEM:Sodium Salicylate	increases	MAPK1
+SCHEM:serum insulin	increases	MAPK1
 YES1	increases	MAPK1
 CCR7	increases	MAPK1
 EGF	increases	MAPK1
 PTK2	increases	MAPK1
 EGF	increases	MAPK1
 ADRB2	increases	MAPK1
+KRAS	directlyIncreases	KRAS
 CHEBI:reactive oxygen species	increases	MAP2K1
 EGFR	increases	NRAS
 EGFR	increases	NRAS
@@ -554,8 +575,7 @@ SCHEM:serum insulin	increases	MAPK1
 HRAS	increases	GO:growth
 RAF1	increases	PRDX6
 MAPK1	increases	FOSL2
-HRAS	decreases	BAD
-MAPK1	directlyIncreases	CAD
+PFH:RAS Family	directlyIncreases	BRAF
 AXL	increases	MAP2K1
 SDIS:burn injury	decreases	MAPK1
 HRAS	increases	SDIS:oncogenic transformation
@@ -563,6 +583,7 @@ RASSF1	increases	MAPK1
 AKT1	decreases	RAF1
 MAPK1	increases	SDIS:cardiomyocyte hypertrophy
 RAF1	decreases	MESHPP:Apoptosis
+KRAS	increases	PTGS2
 EDN1	increases	MAPK1
 CXCL12	increases	MAPK1
 SNCG	increases	MAPK1
@@ -570,6 +591,8 @@ MAPK1	directlyIncreases	SREBF1
 SCHEM:Dinoprostone	increases	MAPK1
 SCHEM:serum insulin	increases	MAPK1
 MAPK1	directlyIncreases	PFH:PDE4 Family
+KRAS	directlyIncreases	KRAS
+KRAS	directlyIncreases	KRAS
 PFH:PRKA Family	decreases	RAF1
 IL18	increases	MAPK1
 MAPK1	increases	RPS6KA3
@@ -583,7 +606,7 @@ SCHEM:cyclic AMP	increases	BRAF
 FGF2	increases	MAPK1
 MAP3K3	directlyIncreases	MAP2K1
 PFH:AKT Family	decreases	BRAF
-MAP2K2	increases	LIMK1
+EGF	increases	MAPK1
 MAP2K2	directlyIncreases	LIMK1
 MAP2K2	directlyIncreases	LIMK1
 EGF	increases	MAPK1
@@ -625,6 +648,7 @@ RAF1	increases	MAPK1
 PFH:PRKC Family	directlyIncreases	RAF1
 RAF1	increases	MAP2K1
 MAP2K1	increases	FOSL2
+KRAS	increases	SDIS:tumor growth
 TSC2	increases	MAPK1
 HGF	increases	MAPK1
 MAP2K1	increases	SDIS:Cisplatin resistance
@@ -646,14 +670,19 @@ PFH:PRKA Family	directlyDecreases	RAF1
 RASSF1	increases	MAPK1
 CHEBI:nicotine	increases	RAF1
 CHEBI:nicotine	increases	RB1
+KRAS	increases	GLI2
 MAPK1	increases	AR
+CHEBI:hydrogen peroxide	increases	CASP7
 MAPK1	increases	CREBBP
 NRAS	directlyIncreases	NRAS
 NRAS	directlyIncreases	NRAS
+KRAS	directlyIncreases	KRAS
 PFH:SOS Family	directlyIncreases	NRAS
 IL2	increases	RAF1
 CHEBI:hydrogen peroxide	increases	MAPK1
 PFH:PRKC Family	increases	MAP2K1
+KRAS	directlyIncreases	KRAS
+KRAS	directlyIncreases	KRAS
 EGF	increases	MAPK1
 TNF	increases	MAPK1
 EGID:183	increases	MAPK1
@@ -689,7 +718,7 @@ HRAS	increases	ITGB2
 PFH:RAF Family	directlyIncreases	MAP2K1
 SCHEM:serum insulin	increases	MAPK1
 SCHEM:serum insulin	increases	MAPK1
-CHEBI:reactive oxygen species	increases	MAPK1
+KRAS	increases	DYRK1B
 CHEBI:wortmannin	decreases	MAPK1
 CHEBI:wortmannin	decreases	MAPK1
 MAPK1	increases	PLVAP
@@ -717,14 +746,14 @@ PFH:RAS Family	increases	MAPK1
 RAF1	increases	MAPK1
 MAP2K2	increases	MAPK1
 CHEBI:lipopolysaccharide	increases	MAP2K1
-NMU	increases	IL10
+KRAS	increases	PTGS2
 RAF1	directlyIncreases	RAF1
 RAF1	directlyDecreases	RAF1
 PFH:PRKA Family	decreases	RAF1
 EGFR	increases	NRAS
+NCM:Nfkb Complex	decreases	RAF1
 EGFR	increases	NRAS
-EGFR	increases	NRAS
-BCL2	decreases	MAPK1
+DAB2IP	directlyDecreases	KRAS
 NCM:Nfkb Complex	decreases	MAPK1
 GIP	increases	MAP2K1
 MAP3K5	increases	PDCD6
@@ -753,6 +782,7 @@ SCHEM:Dinoprostone	increases	MAPK1
 FGF2	increases	MAPK1
 SCHEM:Dinoprostone	increases	MAPK1
 CAMK4	increases	MAPK1
+KRAS	directlyIncreases	KRAS
 IRF7	increases	RAF1
 MAPK1	decreases	SMAD1
 MAPK1	decreases	GOCCACC:GO:0005737
@@ -763,6 +793,7 @@ MAPK1	decreases	GOCCACC:GO:0005634
 RAF1	increases	MAP2K2
 GO:response to hypoxia	increases	HSPA5
 HRAS	increases	NCH:p85/p110 PI3Kinase Complex
+PFM:Raf Family	increases	MAP2K2
 NRAS	increases	AKT1
 EGF	increases	MAPK1
 GO:microtubule polymerization	decreases	IER3
@@ -795,7 +826,8 @@ NF1	decreases	MAPK1
 EGF	increases	MAPK1
 NGF	increases	MAPK1
 MAPK1	directlyIncreases	CREBBP
-RASGRF1	increases	HRAS
+KRAS	increases	GO:cell growth
+KRAS	increases	GO:cell growth
 CHEBI:nicotine	increases	RAF1
 CHEBI:nicotine	increases	RB1
 CHEBI:nicotine	increases	RAF1
@@ -805,6 +837,7 @@ CHEBI:nicotine	increases	RB1
 RAF1	directlyIncreases	RAF1
 MAPK1	increases	GNAI3
 MAPK1	directlyIncreases	RGS19
+KRAS	increases	RPS6KB1
 CDH1	increases	MAPK1
 SULF1	decreases	MAPK1
 PFH:RAS Family	directlyIncreases	RAF1
@@ -834,6 +867,7 @@ CHEBI:nitric oxide	decreases	MAPK1
 CHEBI:estradiol	increases	MAPK1
 GO:microtubule polymerization	decreases	GPRC5C
 EGF	increases	MAPK1
+KRAS	increases	ST6GAL1
 PDGFRA	increases	MAP2K1
 BRAF	directlyIncreases	BRAF
 CSK	increases	MAPK1
@@ -844,6 +878,7 @@ DUSP6	directlyDecreases	MAPK1
 MAPK1	directlyIncreases	SGK1
 SCHEM:Sorbitol	increases	MAPK1
 EGF	decreases	CDKN1B
+PDGFB	increases	MAPK1
 EGF	decreases	CDKN1B
 HRAS	increases	ECHS1
 HRAS	increases	ERLIN2
@@ -857,7 +892,7 @@ MAPK1	increases	ATP1A2
 BRAF	directlyIncreases	MAP2K1
 EGID:3630	increases	MAPK1
 RAF1	directlyIncreases	MAP2K1
-SCHEM:serum insulin	increases	MAPK1
+SCHEM:Sodium Salicylate	increases	MAPK1
 MAPK1	increases	ATP1A1
 MAPK1	increases	ATP1A2
 ITGAV	increases	MAPK1
@@ -874,6 +909,7 @@ ITGA3	increases	MAPK1
 PAK3	directlyIncreases	RAF1
 MAPK1	decreases	EGID:109899
 MAPK1	increases	IL6
+CHEBI:rosiglitazone	decreases	KRAS
 ICAM1	increases	MAP2K1
 RASGRF1	increases	HRAS
 RASGRF1	increases	HRAS
@@ -893,6 +929,7 @@ MAP2K1	directlyIncreases	MAPK1
 MAPK1	increases	ADRBK1
 MAPK1	increases	GO:DNA replication
 MAPK1	increases	GO:cell proliferation
+EGF	increases	MAPK1
 RAF1	increases	PFH:MEK1/2 Family
 MAPK1	increases	NCOA1
 CHEBI:angiotensin II	increases	MAPK1
@@ -907,7 +944,10 @@ HRAS	increases	MAPK1
 MIR106B	decreases	MAPK1
 TNF	increases	MAPK1
 EGID:20963	increases	MAPK1
+ICMT	directlyIncreases	KRAS
+KRAS	increases	MESHD:Neoplasms
 EGF	increases	MAPK1
+KRAS	increases	MESHD:Neoplasms
 CHEBI:lipopolysaccharide	increases	IL10
 CHEBI:lipopolysaccharide	increases	IFNG
 MAP2K2	directlyIncreases	MAPK3
@@ -917,18 +957,21 @@ EGFR	increases	NRAS
 TNF	increases	MAPK1
 PDGFRB	increases	MAP2K2
 PDGFRA	increases	MAP2K1
-EGF	increases	MAPK1
+RAF1	increases	MAPK1
 MAPK1	directlyIncreases	MED1
 MAPK1	increases	RPS6KA4
 MAPK1	increases	RPS6KA5
 TNF	increases	MAPK1
 SCHEM:Remnant lipoprotein	increases	GO:cell proliferation
 LYN	increases	MAPK1
+KRAS	increases	RASSF2
+KRAS	increases	KRAS
+KRAS	increases	RASSF2
 GO:microtubule polymerization	decreases	TIMP1
 GO:microtubule polymerization	decreases	SPTBN1
 MAPK1	increases	BAD
 GO:microtubule polymerization	decreases	TNFAIP8
-RASSF1	decreases	RAF1
+PFH:RAF Family	directlyIncreases	MAP2K2
 MAP2K1	increases	CSE1L
 HRAS	increases	PGLS
 NRAS	directlyIncreases	NRAS
@@ -947,6 +990,7 @@ RAF1	increases	FOXO1
 RAF1	increases	RELA
 MAPK1	increases	BAG1
 MAPK1	increases	PBK
+KRAS	directlyIncreases	KRAS
 HRAS	increases	RPS6
 HRAS	decreases	CASP3
 IL6R	increases	MAPK1
@@ -972,6 +1016,7 @@ SORT1	increases	MAPK1
 F2	increases	MAPK1
 MAPK1	directlyIncreases	DUSP6
 EGF	increases	MAPK1
+MAP2K1	decreases	MESHPP:Apoptosis
 MAPK1	directlyIncreases	CDC25C
 MAPK1	directlyIncreases	CDC25C
 BDNF	increases	CREB1
@@ -979,15 +1024,18 @@ MAP2K1	directlyIncreases	MAPK3
 MAP2K2	directlyIncreases	MAPK3
 EGF	increases	MAPK1
 CHEBI:lysophosphatidic acid	increases	MAPK1
+KRAS	directlyIncreases	KRAS
 HRAS	decreases	PFH:RAC Family
 PFH:PRKC Family	increases	MAPK1
 FGFR2	increases	MAPK1
 HRAS	increases	GAMT
 HRAS	increases	HIBADH
+KRAS	increases	ITGA1
 PTGIR	increases	MAPK1
 LIFR	increases	MAPK1
 EGF	increases	MAPK1
-ARAF	directlyIncreases	MAP2K1
+KRAS	increases	CHEBI:reactive oxygen species
+KRAS	increases	PTGS2
 CHEBI:sodium chloride	increases	MAPK1
 RAF1	directlyIncreases	MAP2K1
 BRAF	directlyIncreases	MAP2K1
@@ -1002,6 +1050,7 @@ ITGA5	increases	MAPK1
 ITGB1	increases	MAPK1
 EGF	increases	MAPK1
 PPIA	increases	MAPK1
+KRAS	decreases	ITGB1
 HRAS	increases	SDIS:tumor growth
 NRAS	increases	SDIS:tumor growth
 MAP2K2	decreases	STAT3
@@ -1018,11 +1067,13 @@ MAP2K2	directlyIncreases	MAPK3
 RAF1	increases	MAPK1
 ERBB2	increases	MAPK1
 PEA15	directlyDecreases	MAPK1
+KRAS	increases	SDIS:tumor growth
 SCHEM:Tretinoin	increases	MAPK1
 EGID:5424	decreases	RAF1
 MAP2K1	directlyIncreases	MAP2K1
 MAP2K1	directlyIncreases	MAP2K1
 OSM	increases	MAP2K1
+KRAS	increases	TGFA
 IL13	increases	MAPK1
 GRP	increases	MAPK1
 PRKD3	increases	MAPK1
@@ -1063,6 +1114,7 @@ MAPK1	increases	RPS6KA2
 TNFSF10	decreases	MAPK1
 NRAS	directlyIncreases	NRAS
 MAPK1	directlyIncreases	MCL1
+BCL2	decreases	MAPK1
 MAP2K1	increases	ELK1
 NTRK2	increases	HRAS
 BRAF	increases	SDIS:Oncogene induced senescence
@@ -1094,6 +1146,7 @@ EGF	increases	MAPK1
 EGF	increases	MAPK1
 RAF1	increases	RELA
 EGF	increases	MAPK1
+CHEBI:N-acetylsphingosine	increases	KRAS
 RAF1	decreases	PFH:AKT Family
 MAPK1	directlyIncreases	STMN1
 RAF1	directlyIncreases	SOS1
@@ -1104,12 +1157,13 @@ CHEBI:insulin	increases	MAP2K1
 SRC	directlyIncreases	RAF1
 MAPK1	increases	ETS1
 CUL5	decreases	MAPK1
-EGF	increases	MAPK1
+MAP2K2	increases	LIMK1
 EGID:183	increases	MAPK1
 NCH:p85/p110 PI3Kinase Complex	increases	MAPK1
 SCHEM:Colforsin	increases	CCNL1
 MAPK1	increases	DUSP1
 RAF1	increases	EPHA4
+KRAS	directlyIncreases	KRAS
 PFH:PRKC Family	increases	MAPK1
 SCHEM:Tetradecanoylphorbol acetate	increases	MAPK1
 RAF1	increases	MAPK1
@@ -1132,7 +1186,8 @@ MAPK1	directlyIncreases	NCH:AP-1 Complex
 PAWR	increases	MESHPP:Apoptosis
 IER3	increases	MAPK1
 MAPK1	increases	IER3
-PFM:Raf Family	increases	MAP2K2
+KRAS	directlyIncreases	KRAS
+KRAS	directlyIncreases	KRAS
 GRP	increases	MAPK1
 EGID:183	increases	MAPK1
 TNF	increases	NCH:Nfkb Complex
@@ -1158,7 +1213,9 @@ RAF1	decreases	NKX2-1
 ERBB2	increases	MAPK1
 PPIA	increases	MAPK1
 RASA3	directlyIncreases	HRAS
+RASA3	directlyIncreases	KRAS
 HRAS	increases	JUN
+SOS1	directlyIncreases	KRAS
 SOS1	directlyIncreases	HRAS
 RAF1	increases	MAPK1
 RAF1	decreases	BAD
@@ -1206,6 +1263,9 @@ HRAS	increases	VASP
 RASA4	directlyDecreases	HRAS
 GOCCACC:GO:0005737	directlyDecreases	HRAS
 GOCCACC:GO:0005886	directlyDecreases	HRAS
+RASA4	directlyDecreases	KRAS
+GOCCACC:GO:0005737	directlyDecreases	KRAS
+GOCCACC:GO:0005886	directlyDecreases	KRAS
 MAP2K1	increases	NCH:Nfkb Complex
 MAPK1	decreases	SMAD2
 MAPK1	decreases	PFH:PDE4 Long No A Family
@@ -1264,6 +1324,7 @@ CHEBI:reactive oxygen species	increases	HRAS
 APP	increases	MAP2K1
 CCR7	increases	MAPK1
 MAPK1	increases	NCH:Nfkb Complex
+ARAF	directlyIncreases	MAP2K1
 MAPK1	increases	NR3C1
 CHEBI:reactive oxygen species	increases	MAPK1
 BRAF	directlyIncreases	BRAF
@@ -1286,7 +1347,7 @@ HRAS	directlyIncreases	HRAS
 RAF1	increases	PFR:MEK1/2 Family
 RAF1	increases	GO:JAK-STAT cascade
 SCHEM:Tetradecanoylphorbol acetate	increases	MAPK1
-HGF	increases	MAPK1
+KRAS	increases	MESHD:Adenoma
 REN	increases	MAPK1
 HRAS	increases	MAPK3
 MAPK1	increases	USF1
@@ -1304,18 +1365,22 @@ F2	increases	MAPK1
 HRAS	increases	NCH:p85/p110 PI3Kinase Complex
 RAC2	increases	MAPK1
 NRAS	directlyIncreases	NRAS
+KRAS	directlyIncreases	KRAS
 HRAS	directlyIncreases	HRAS
 CHEBI:reactive oxygen species	increases	MAPK1
 PPIA	increases	MAPK1
 HRAS	increases	CHEBI:reactive oxygen species
 RAF1	decreases	PFM:Casp Family
 PFH:AKT Family	directlyIncreases	RAF1
+MAP2K1	increases	IKBKB
 THPO	increases	RAF1
 THPO	increases	BRAF
 BRAF	increases	ELK1
 BRAF	increases	PFH:MAPK Erk1/3 Family
 HRAS	decreases	GO:cell growth
 HRAS	decreases	GO:cell growth
+EGID:24179	increases	MAPK1
+KRAS	increases	GLI3
 MAPK1	increases	ETV1
 RAF1	increases	MESHPP:Apoptosis
 MAPK1	increases	EIF4E
@@ -1332,9 +1397,11 @@ RAF1	directlyIncreases	BAD
 BRAF	increases	GO:cell proliferation
 BRAF	increases	MAPK3
 BRAF	increases	MAP2K1
+KRAS	increases	MAPK8
 BRAF	increases	SDIS:Oncogene induced senescence
 MAP2K2	directlyIncreases	MAPK1
 HRAS	increases	PRKCA
+KRAS	increases	EPHA2
 MAP2K1	decreases	MESHPP:Apoptosis
 TNF	increases	MAPK1
 MAPK1	decreases	MESHPP:Apoptosis
@@ -1366,6 +1433,7 @@ CHEBI:nicotine	increases	RB1
 CXCL12	increases	MAPK1
 RAF1	directlyIncreases	MAP2K1
 GO:microtubule polymerization	decreases	BTG3
+GO:response to hypoxia	increases	KRAS
 GO:microtubule polymerization	decreases	CDKN1B
 GO:microtubule polymerization	decreases	CKS2
 RAF1	decreases	GO:G1/S transition of mitotic cell cycle
@@ -1388,8 +1456,10 @@ CHEBI:lysophosphatidic acid	increases	MAPK1
 CHEBI:nicotine	increases	MAPK1
 PFH:PRKC Family	increases	MAPK1
 MAP2K1	decreases	MESHPP:Apoptosis
-TLR2	increases	MAPK1
+KRAS	increases	CHEBI:glutathione
+KRAS	increases	CHEBI:glutathione
 IFNA1	increases	MAPK1
+KRAS	increases	HNRNPA2B1
 MAPK1	decreases	MESHPP:Apoptosis
 MAPK1	directlyIncreases	ARRB1
 MAP2K1	increases	HNRNPK
@@ -1418,6 +1488,7 @@ IL1B	increases	MAPK1
 CCR7	increases	MAPK1
 MAPK1	increases	MMP9
 NCR:p85/p110 PI3Kinase Complex	decreases	GO:cell death
+KRAS	directlyIncreases	KRAS
 HGF	increases	MAP2K2
 HGF	increases	MAP2K1
 PRKCZ	directlyIncreases	RAF1
@@ -1428,6 +1499,7 @@ RAF1	directlyIncreases	MAP2K1
 RAF1	directlyIncreases	MAP2K1
 IL1B	increases	MAPK1
 TNK1	decreases	RAF1
+KRAS	decreases	PFH:THBS Family
 EPHB1	increases	MAPK1
 BRAF	directlyIncreases	BRAF
 TNF	increases	MAP2K2
@@ -1442,6 +1514,7 @@ MAPK1	increases	CDKN1A
 PTGER4	increases	MAPK1
 TNF	increases	MAPK1
 PTPRC	decreases	MAPK1
+KRAS	increases	ETS1
 CXCL9	increases	MAPK1
 CHEBI:estradiol	increases	MAPK1
 MAPK1	increases	PFM:MAPK Erk1/3 Family
@@ -1454,9 +1527,11 @@ HRAS	increases	MAPK8
 SCHEM:Dinoprostone	decreases	MAPK1
 MAPK1	increases	AKT1
 SCHEM:Dinoprostone	decreases	MAPK1
-MAPK1	increases	KLK3
+KRAS	increases	PFH:MAPK JNK Family
+KRAS	increases	MAPK8
 KRAS	directlyIncreases	RAF1
 RAF1	increases	MESHPP:Apoptosis
+KRAS	increases	RB1
 RAF1	increases	SDIS:Oncogene induced senescence
 RAF1	increases	PLD2
 RAF1	increases	PLD1
@@ -1477,15 +1552,18 @@ MAP2K2	directlyIncreases	MAP2K2
 MAP2K1	directlyIncreases	MAP2K1
 MAP2K2	directlyIncreases	MAPK3
 BRAF	increases	MKI67
+KRAS	directlyIncreases	KRAS
 RAF1	directlyIncreases	MAP2K1
 MAP2K2	directlyIncreases	MAPK1
 HGF	increases	MAPK1
 MAP2K1	increases	STAT1
+KRAS	increases	EPHA2
 HRAS	increases	GO:Ras protein signal transduction
 MAPK1	increases	IL6
 SOS1	directlyIncreases	NRAS
 HRAS	directlyIncreases	PFH:RAF Family
 DUSP3	decreases	MAPK1
+SOS1	directlyIncreases	KRAS
 EGF	increases	MAPK1
 UCN	increases	MAP2K2
 UCN	increases	MAP2K1
@@ -1493,6 +1571,8 @@ KDR	increases	MAPK1
 PTAFR	increases	MAPK1
 RAF1	directlyIncreases	MAP2K1
 RAF1	directlyIncreases	MAP2K1
+KRAS	directlyIncreases	KRAS
+KRAS	directlyIncreases	KRAS
 HRAS	increases	ERF
 TNF	increases	MAPK1
 TNF	increases	MAPK1
@@ -1507,6 +1587,7 @@ CHEBI:nicotine	increases	RB1
 SPN	increases	MAPK1
 PDGFB	increases	MAPK1
 MAP2K1	directlyIncreases	MAPK3
+IL6	increases	KRAS
 RAF1	directlyIncreases	MAP2K2
 CHEBI:hydrogen peroxide	increases	HRAS
 GO:microtubule polymerization	decreases	ARG2
@@ -1514,6 +1595,7 @@ IL17A	increases	RAF1
 GO:microtubule polymerization	decreases	BCL2L1
 NCH:Proteasome Complex	decreases	HRAS
 SCHEM:Calcium	increases	BRAF
+KRAS	directlyIncreases	PFH:RAS Family
 RAF1	decreases	BAD
 MAP2K2	directlyIncreases	MAPK3
 MAPK1	directlyIncreases	MYC
@@ -1521,20 +1603,29 @@ MAP2K2	directlyIncreases	MAPK3
 MAP2K2	directlyIncreases	MAPK1
 MAP2K1	directlyIncreases	MAPK1
 GO:microtubule polymerization	decreases	LAMB1
+KRAS	directlyIncreases	KRAS
 FGF2	increases	MAPK1
+EGF	increases	MAPK1
+KRAS	directlyIncreases	KRAS
 CHEBI:taurine	increases	MAP2K1
 CHEBI:gefitinib	decreases	MAPK1
 BRAF	directlyIncreases	BRAF
 CHEBI:gefitinib	decreases	MAPK1
 MAPK1	directlyIncreases	MKNK1
-MAP2K1	decreases	MESHPP:Apoptosis
+KRAS	decreases	ITGB1
+KRAS	increases	HNRNPD
+KRAS	decreases	BGN
+KRAS	increases	PSMC6
+KRAS	decreases	ETFB
 RAF1	directlyIncreases	RAF1
 MUC1	increases	MAP2K2
 MAPK1	directlyIncreases	GJA1
 SCHEM:Tetradecanoylphorbol acetate	increases	MAPK1
 HRAS	directlyIncreases	PFH:RAS Family
 SCHEM:Tetradecanoylphorbol acetate	increases	MAPK1
-CHEBI:ceramide	decreases	MAPK1
+PAK4	decreases	GO:cell proliferation
+KRAS	increases	SCHEM:Dinoprostone
+KRAS	increases	GO:angiogenesis
 HRAS	increases	GO:angiogenesis
 MAPK1	increases	BAD
 CXCR4	increases	MAPK1
@@ -1549,7 +1640,7 @@ MAP2K1	increases	EIF4G1
 TNFRSF1A	increases	MAPK1
 PTEN	decreases	MAPK1
 MAPK1	directlyIncreases	TOP2A
-PFH:RAF Family	directlyIncreases	MAP2K2
+RAF1	decreases	MAPK1
 PTPN7	decreases	MAP2K1
 MAPK1	decreases	CAV1
 SCHEM:Oxidized Low Density Lipoprotein	increases	MAPK1
@@ -1577,7 +1668,9 @@ CHEBI:lipopolysaccharide	increases	MAP2K1
 MAPK1	increases	CREBBP
 MAPK1	increases	CREB1
 RAF1	directlyIncreases	MAP2K1
+KRAS	directlyIncreases	KRAS
 EGF	increases	MAPK1
+KRAS	decreases	THBS1
 HRAS	decreases	THBS1
 HRAS	increases	PRKAR1A
 NRG1	increases	MAPK1
@@ -1586,6 +1679,7 @@ MAP2K1	directlyIncreases	MAP2K1
 EGF	increases	MAPK1
 CHEBI:reactive oxygen species	increases	HRAS
 PAK1	increases	MAP2K1
+EGFR	increases	MAPK1
 MAPK1	increases	STK11
 EGFR	increases	MAPK1
 BRAF	directlyIncreases	BRAF
@@ -1608,10 +1702,14 @@ HRAS	increases	CDKN1A
 HRAS	increases	CDKN1A
 HRAS	decreases	CDKN1B
 HRAS	increases	JUN
-EGF	increases	MAPK1
+KRAS	decreases	ITGA1
+KRAS	decreases	ITGA5
 MAPK1	decreases	MESHPP:Apoptosis
 EGID:24179	increases	MAPK1
+KRAS	increases	ITGA3
+KRAS	increases	ITGAV
 NRG1	increases	MAPK1
+KRAS	directlyIncreases	PFH:RAS Family
 HSP90AA1	increases	RAF1
 CHEBI:nicotine	increases	MAPK1
 CHEBI:nicotine	increases	MAPK1
@@ -1621,6 +1719,7 @@ EGID:30816	increases	MAP2K2
 MAPK1	directlyIncreases	CASP9
 PFH:RAS Family	increases	MAPK1
 EGFR	increases	MAPK1
+CHEBI:reactive oxygen species	increases	MAPK1
 MVD	increases	HRAS
 MAP2K1	directlyIncreases	MAP2K1
 SCHEM:serum insulin	increases	MAPK1
@@ -1647,11 +1746,14 @@ HRAS	increases	MAPK1
 ARAF	directlyIncreases	MAP2K1
 EGFR	increases	MAPK1
 ADRB2	increases	MAPK1
+CD74	increases	MAPK1
+MIF	increases	MAPK1
 RAF1	decreases	SDIS:dilatation
 IGF1	increases	MAP2K1
 BRAF	directlyIncreases	BRAF
 LIF	increases	MAP2K1
 PLAU	increases	MAPK1
+TLR2	increases	MAPK1
 CD40LG	increases	MAPK1
 CD40LG	increases	MAPK1
 SCHEM:serum leptin	increases	MAPK1
@@ -1689,6 +1791,8 @@ HRAS	increases	GO:mitosis
 HRAS	decreases	PLAU
 IL13RA2	increases	MAP2K1
 BCAR1	increases	MAPK1
+KRAS	directlyIncreases	KRAS
+KRAS	directlyIncreases	KRAS
 HRAS	directlyIncreases	BRAF
 HRAS	directlyIncreases	BRAF
 HRAS	directlyIncreases	BRAF
@@ -1697,6 +1801,8 @@ MAPK1	directlyIncreases	TOP2A
 CHEBI:cholesterol	decreases	MAPK1
 MAP2K1	decreases	CASP3
 EGFR	increases	MAPK1
+CHEBI:hydrogen peroxide	increases	GO:cell death
+CHEBI:hydrogen peroxide	increases	GO:cell death
 MAPK1	directlyIncreases	MAPK1
 CHEBI:fenofibrate	decreases	MAPK1
 MAPK1	directlyIncreases	MAPK1
@@ -1730,10 +1836,12 @@ GRP	increases	MAPK1
 MAP3K1	increases	MAPK1
 MAPK1	directlyIncreases	MYC
 HRAS	directlyIncreases	PFH:RAF Family
+KRAS	directlyIncreases	PFH:RAF Family
 RAF1	increases	NFKBIA
 PFH:14-3-3 Family	directlyDecreases	RAF1
 RAF1	increases	SCHEM:1-Alkyl-2-acetyl-sn-glycero-3-phosphocholine
 FGF2	increases	RAF1
+NMU	increases	IL10
 MAPK1	directlyIncreases	MAPK1
 MAPK1	directlyIncreases	MAPK1
 PDGFA	decreases	MAPK1
@@ -1757,9 +1865,12 @@ BRAF	directlyDecreases	BRAF
 EGFR	increases	MAPK1
 SCHEM:Tetradecanoylphorbol acetate	increases	MAPK1
 EGFR	increases	MAPK1
-NCM:Nfkb Complex	decreases	RAF1
+EGFR	increases	NRAS
 DUSP6	directlyDecreases	MAPK1
 BRAF	increases	SFTPC
+KRAS	directlyIncreases	KRAS
+KRAS	directlyIncreases	KRAS
+KRAS	directlyIncreases	KRAS
 ADRB2	increases	MAPK1
 MAPK1	directlyIncreases	ETS2
 GRP	increases	MAPK1
@@ -1767,15 +1878,20 @@ MAP2K1	increases	STAT1
 MAP2K1	increases	STAT1
 SDIS:cyclic stretch	increases	MAPK1
 SDIS:cyclic stretch	increases	RAF1
+KRAS	directlyIncreases	KRAS
+KRAS	directlyIncreases	KRAS
 IL1B	increases	MAPK1
 IGFBP7	decreases	MAP2K2
-RAF1	decreases	MAPK1
+KRAS	directlyIncreases	KRAS
+KRAS	directlyIncreases	KRAS
 MVD	increases	HRAS
 MVD	increases	HRAS
 EGF	increases	MAPK1
 EGF	increases	MAPK1
+KRAS	directlyIncreases	KRAS
 EGFR	increases	MAPK1
 PFH:MEK1/2 Family	directlyIncreases	MAP2K1
+KRAS	directlyIncreases	KRAS
 ITGAV	increases	MAP2K1
 GK	increases	NRAS
 PRKCB	increases	RAF1
@@ -1838,12 +1954,15 @@ MAPK1	increases	ZFP36
 EGF	increases	MAPK1
 RAF1	increases	MAPK9
 RAF1	increases	MAPK8
-EGFR	increases	RAF1
+KRAS	decreases	SERPINH1
+KRAS	decreases	RAB35
 NCH:B-cell receptor complex	increases	MAPK1
+KRAS	increases	HNRNPA2B1
+KRAS	decreases	SNRPB
 HGF	increases	MAP2K2
 MAPK1	directlyDecreases	CASP9
 MAPK1	directlyIncreases	CASP9
-PDGFB	increases	MAPK1
+GO:microtubule polymerization	decreases	MCAM
 MAP2K1	increases	STAT3
 MAP2K2	increases	STAT3
 PTPN7	decreases	MAP2K1
@@ -1859,6 +1978,7 @@ FAS	increases	KRT18
 FAS	increases	KRT8
 FAS	increases	RAF1
 FAS	increases	CFLAR
+HRAS	decreases	BAD
 MAPK1	increases	PPARG
 TNFSF13	increases	MAPK1
 MAPK1	increases	PPARG
@@ -1900,7 +2020,6 @@ PFH:RAC Family	increases	MAP2K1
 MAP2K1	increases	MEF2C
 PTN	increases	HRAS
 AGTR1	increases	MAPK1
-SDIS:mechanical stress	increases	MAPK1
 MERTK	increases	RAF1
 MERTK	increases	MAPK1
 PRL	increases	MAPK1
@@ -1949,12 +2068,14 @@ CHEBI:insulin	increases	MAP2K1
 KITLG	increases	MAPK1
 KIT	increases	MAPK1
 EGID:24179	increases	MAPK1
-RAF1	increases	MAPK1
+EGF	increases	MAPK1
 GIT1	increases	MAP2K1
 MAP2K1	increases	MAP2K1
+RHEB	directlyDecreases	RAF1
 NRAS	directlyIncreases	NRAS
-CAMK2B	increases	RAF1
+RASSF1	decreases	RAF1
 PFH:RAF Family	directlyIncreases	MAP2K1
+KRAS	directlyIncreases	KRAS
 ERBB2	increases	MAPK1
 RAF1	increases	MAPK1
 CHEBI:hydrogen peroxide	decreases	MAP2K1
@@ -1963,6 +2084,7 @@ MDM2	increases	RAF1
 GO:microtubule polymerization	decreases	LGALS1
 GO:microtubule polymerization	decreases	MAFF
 EGID:183	increases	MAPK1
+DAB2IP	directlyDecreases	KRAS
 AGTR1	increases	MAPK1
 MAP2K1	directlyIncreases	MAPK3
 RAF1	directlyDecreases	ATM
@@ -1982,11 +2104,16 @@ HRAS	decreases	TGM2
 MAPK1	directlyIncreases	DUSP1
 MAP2K1	increases	ITGB3
 HRAS	increases	PLCE1
+KRAS	decreases	PPIB
+KRAS	increases	PSMC6
+KRAS	increases	ESD
+KRAS	increases	HNRNPD
 CCL2	increases	MAPK1
 SDIS:cyclic stretch	increases	MAPK1
 SDIS:cyclic stretch	increases	MAPK1
 SDIS:cyclic stretch	increases	MAPK1
 MAPK1	increases	PLAU
+KRAS	directlyIncreases	KRAS
 ACP1	increases	MAPK1
 GRB2	increases	MAPK1
 PTPN7	decreases	MAPK1
@@ -2005,7 +2132,7 @@ EGF	increases	MAPK1
 RIPK2	increases	MAPK1
 IFNG	increases	MAP2K1
 AVP	increases	MAPK1
-EGID:24179	increases	MAPK1
+HGF	increases	MAPK1
 PRKCA	increases	RAF1
 SCHEM:Tretinoin	increases	RAF1
 RAP1A	increases	RAF1
@@ -2026,7 +2153,7 @@ CHEBI:glucocorticoid	increases	MAPK1
 CHEBI:glucocorticoid	increases	MAPK1
 CHEBI:hydrogen peroxide	increases	MAPK1
 LEP	increases	MAPK1
-MST1R	increases	MAPK1
+PTK2	increases	MAP2K1
 TNF	increases	MAPK1
 EGF	increases	RAF1
 PFR:Akt Family	decreases	BRAF
@@ -2042,6 +2169,7 @@ TNFRSF1B	increases	MAPK1
 MAP2K1	increases	IL2RA
 TNF	increases	MAPK1
 IL2	increases	MAPK1
+KRAS	increases	SDIS:tumor growth
 HRAS	increases	NCH:p85/p110 PI3Kinase Complex
 PFM:Adcy Family	increases	MAPK1
 SNCA	increases	MAPK1
@@ -2101,7 +2229,7 @@ GRB2	increases	MAPK1
 KIT	increases	MAPK1
 RAF1	decreases	RAF1
 RAF1	decreases	KRT8
-GO:microtubule polymerization	decreases	MCAM
+MAPK1	increases	KLK3
 GO:microtubule polymerization	decreases	MCL1
 MAPK1	directlyIncreases	PTPN7
 MAPK1	directlyIncreases	PTPN7
@@ -2111,16 +2239,20 @@ RAF1	increases	MAP2K2
 TSC22D3	decreases	RAF1
 RAF1	decreases	RAF1
 RAF1	directlyIncreases	RAF1
+KRAS	increases	SDIS:tumor growth
 CHEBI:hyaluronic acid	increases	MAPK1
 FGF2	increases	MAPK1
 HRAS	decreases	MESHPP:Apoptosis
-RHEB	directlyDecreases	RAF1
+PLCB1	increases	MAPK1
 PTGER3	increases	RAF1
 HRAS	increases	RPS6
 OSM	increases	MAPK1
 RAF1	increases	MAPK8
 BDNF	increases	MAP2K1
 DUSP1	decreases	MAPK1
+KRAS	decreases	SERPINH1
+KRAS	decreases	SF3A2
+KRAS	increases	ANXA1
 EGF	increases	MAPK1
 IGFBP3	decreases	MAPK1
 CHEBI:adenosine	increases	MAP2K2
@@ -2135,14 +2267,19 @@ MAPK1	increases	CEBPB
 NRAS	increases	ERBB4
 RAF1	increases	JUN
 PFH:RAS Family	directlyIncreases	BRAF
+KRAS	increases	ERBB4
 HRAS	increases	ERBB4
 NF1	directlyIncreases	HRAS
+RASAL1	directlyDecreases	KRAS
+GOCCACC:GO:0005737	directlyDecreases	KRAS
+GOCCACC:GO:0005886	directlyDecreases	KRAS
 RASAL1	directlyDecreases	NRAS
 GOCCACC:GO:0005737	directlyDecreases	NRAS
 GOCCACC:GO:0005886	directlyDecreases	NRAS
 SOS1	directlyIncreases	HRAS
 MAP2K1	directlyIncreases	MAP2K1
 MAPK14	decreases	MAPK1
+HRAS	increases	CD69
 MAPK1	increases	ATP1A2
 MAPK1	directlyIncreases	BCL2
 CXCL12	increases	MAPK1

@@ -174,8 +174,9 @@ class NdexToGeneSif(util.NetworkWrapper):
         for edge in self.network['edges'].values():
             sifs = self.edgeExpandToSIF(edge)
             for s in sifs:
-                output.write('\t'.join(s) + '\n')
-
+                if len(s) == 3:
+                    output.write('\t'.join(s) + '\n')
+                
         if fileName:
             output.close
 

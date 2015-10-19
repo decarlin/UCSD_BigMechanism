@@ -179,6 +179,14 @@ class NdexToGeneSif(util.NetworkWrapper):
         if fileName:
             output.close
 
+    def edgeList(self):
+        edge_list=list()
+
+        for edge in self.network['edges'].values():
+            sifs = self.edgeExpandToSIF(edge)
+            for s in sifs:
+                edge_list.append((s[0],s[2]))
+        return edge_list
 
     def getTermLabel(self, termId):
         if termId in self.termLabelMap:

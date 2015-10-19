@@ -1,5 +1,8 @@
 targets: diffused.txt
 
+erna_phospho:
+	../automateHeatKernel.py -q Erna_phospho_perturbed.txt -H ../mappings/bel_HGNCtoRGD.tab -m ../mappings/bel_MGItoRGD.tab -s erna_phospho.sif -d diffused_neural_repair_phospho.txt -N 200 -S 'rat'
+
 established_kernel: some_genes.txt
 	../multiplyEstablishedKernel.py -k kernel.txt -q some_genes.txt -d diffused_established.txt
 
@@ -25,3 +28,6 @@ weighted_query: some_weighted_genes.txt
 
 several_network_query: some_big_networks.txt
 	../multipleHeatKernel.py -q some_genes.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab -s multiple_nets.sif -n some_big_networks.txt -c kernel
+
+full_kernel:
+	../buildFullKernel.py -k ../kernels/BEL_Large_Corpus_HGNC.txt -m ../mappings/bel_MGItoHGNC.tab -r ../mappings/bel_RGDtoHGNC.tab

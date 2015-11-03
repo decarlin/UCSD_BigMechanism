@@ -16,8 +16,6 @@ import weighted_kernel as wk
 if __name__ == "__main__":
     parser = OptionParser()
 
-    parser.add_option("-s", "--sif", dest="sif", action="store", type="string", default=None,
-                      help="Output file for intermediate sif, translated to HGNC")
     parser.add_option("-k", "--kernel", dest="kernel", action="store", type="string", default="kernel.txt",
                       help="Output file for kernel")
     parser.add_option("-t", "--diffusion-time", dest="diffusion_time", type="float", default=0.1,
@@ -56,7 +54,7 @@ if __name__ == "__main__":
         RGDmapper = None
         HGNCmapper = None
         prefix = "NO_LEGAL_PREFIX"
-    if (opts.species == 'human'):
+    elif (opts.species == 'human'):
         MGImapper = ahk.TableEntityMapper(opts.mgi)
         RGDmapper = ahk.TableEntityMapper(opts.rgd)
         HGNCmapper = None
@@ -84,11 +82,9 @@ if __name__ == "__main__":
 
     wrapped = ahk.NdexToGeneSif(myNet, MGImapper=MGImapper, HGNCmapper=HGNCmapper, RGDmapper=RGDmapper, prefix=prefix)
 
-    edge_list = wrapped.edgeList()
-
     wrapped.writeSIF(opts.sif)
 
-    ker = kernel.SciPYKernel(edge_list, time_T=opts.diffusion_time)
+    ker = kernel.SciPYKernel(opts.sif, time_T=opts.diffusion_time)
 
     ker.writeKernel(opts.kernel)
 

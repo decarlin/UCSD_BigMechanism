@@ -169,6 +169,11 @@ class SciPYKernel:
         for line in open(network, 'r'):
 
             parts = line.rstrip().split("\t")
+            
+            if len(parts) != 3:
+                print("problem line:"+line)
+                continue
+
             source = parts[0]
             target = parts[2]
 

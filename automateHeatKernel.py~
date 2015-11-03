@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import ndexClient as nc
 import networkx as nx
 import re, math, os, sys, operator, random
 from scipy.sparse import coo_matrix
@@ -15,7 +14,7 @@ import ndexSchema as schema
 #util=imp.load_source('ndexUtil','ndexUtil.py')
 import ndexUtil as util
 #nc=imp.load_source('ndexClient','ndexClient.py')
-import ndexClient as nc
+import ndex.client as nc
 #kernel=imp.load_source('kernel_scipy','kernel_scipy.py')
 import kernel_scipy as kernel
 import operator
@@ -174,8 +173,9 @@ class NdexToGeneSif(util.NetworkWrapper):
         for edge in self.network['edges'].values():
             sifs = self.edgeExpandToSIF(edge)
             for s in sifs:
-                output.write('\t'.join(s) + '\n')
-
+                if len(s) == 3:
+                    output.write('\t'.join(s) + '\n')
+                
         if fileName:
             output.close
 
@@ -348,7 +348,7 @@ if __name__ == "__main__":
         RGDmapper = None
         HGNCmapper = None
         prefix = "NO_LEGAL_PREFIX"
-    if (opts.species == 'human'):
+    elif (opts.species == 'human'):
         MGImapper = TableEntityMapper(opts.mgi)
         RGDmapper = TableEntityMapper(opts.rgd)
         HGNCmapper = None
@@ -384,11 +384,11 @@ if __name__ == "__main__":
 
     #establishes connections to ndex.  Search via direct neighbors
     if opts.password is not None and opts.username is not None:
-        myNdex = nc.Ndex("http://ndexbio.org", username=opts.password, password=opts.username)
+        myNdex = nc.Ndex("http://ndexbio.org", username=opts.username, password=opts.password)
     else:
         myNdex = nc.Ndex("http://ndexbio.org")
 
-    myNet = myNdex.getNeighborhood(opts.network_uuid, requestString, searchDepth=1)
+    myNet = myNdex.get_neighborhood(opts.network_uuid, requestString, searchDepth=1)
 
     #network=util.ndexPropertyGraphNetworkToNetworkX(myNet)
 

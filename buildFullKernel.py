@@ -7,7 +7,7 @@ import automateHeatKernel as ahk
 import operator
 from optparse import OptionParser
 import sys
-import ndexClient as nc
+import ndex.client as nc
 import kernel_scipy as kernel
 import csv
 import weighted_kernel as wk
@@ -72,13 +72,14 @@ if __name__ == "__main__":
     else:
         sys.exit("Unrecognized species.  Please choose mouse, rat or human.")
 
+
     #establishes connections to ndex.  Search via direct neighbors
     if opts.password is not None and opts.username is not None:
-        myNdex = nc.Ndex("http://ndexbio.org", username=opts.password, password=opts.username)
+        myNdex = nc.Ndex("http://ndexbio.org", username=opts.username, password=opts.password)
     else:
         myNdex = nc.Ndex("http://ndexbio.org")
 
-    myNet = myNdex.getCompleteNetwork(opts.network_uuid)
+    myNet = myNdex.get_complete_network(opts.network_uuid)
 
     wrapped = ahk.NdexToGeneSif(myNet, MGImapper=MGImapper, HGNCmapper=HGNCmapper, RGDmapper=RGDmapper, prefix=prefix)
 

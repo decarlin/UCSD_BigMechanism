@@ -20,10 +20,11 @@ import argparse
 from bottle import route, run, template, default_app, request, post, abort
 import ndex.client as nc
 import json
-import bel_utils as bu
 import kernel_scipy as kernel
-import automatHeatKernel as ahk
+import automateHeatKernel as ahk
 from multiplyEstablishedKernel import EstablishedKernel
+import csv
+import operator
 
 parser = argparse.ArgumentParser(description='run the diffusion service')
 
@@ -44,6 +45,8 @@ app.config['verbose'] = arg.verbose
 app.config['ndex'] = nc.Ndex()
 
 current_kernel_id=None
+username=None
+password=None
 
 @route('/hello')
 def index(name='User'):
@@ -51,17 +54,23 @@ def index(name='User'):
     if verbose_mode:
         return template('<b>This is the test method saying Hello verbosely</b>!', name=name)
     else:
-        return template('<b>Hello</b>!', name=name)
+        return 'Hello!'
 
 @route('/relevence/<network_id>/generate_ndex_heat_kernel', method='GET')
 def generate_heat_kernel(network_id):
-    wrapped = ahk.NdexToGeneSif(network_id)
+
+    if password is not None and ousername is not None:
+        myNdex = nc.Ndex("http://ndexbio.org", username=username, password=password)
+    else:
+        myNdex = nc.Ndex("http://ndexbio.org")
+    myNet = myNdex.get_complete_network(network_id)
+    wrapped = ahk.NdexToGeneSif(myNet)
     edges=wrapped.edgeList()
     ker = kernel.SciPYKernel(edges)
     kernel_id=uuid.uuid1()
-    csv.write('kernels/%s',kernel_id)
+    ker.writeKernel('kernels/{0}'.format(str(kernel_id)))
     
-    return json.dumps({'kernel_id':kernel_id})
+    return json.dumps({'kernel_id':str(kernel_id)})
 
 @route('/relevence/generate_network_heat_kernel', metod='POST')
 def generate_heat_kernel(network_id):
@@ -73,23 +82,23 @@ def generate_heat_kernel(network_id):
 @route('/relevence/rank_entities', method='POST')
 def diffuse_and_rank():
     dict=json.load(request.body)
-    query_list=dict.get('identifier_set')
+    get_these=dict.get('identifier_set')
     kernel_id=dict.get('kernel_id')
-    if not query_list:
+    if not get_these:
         abort(401, "requires identifier_set parameter in POST data")
     if not kernel_id:
         abort(401, "requires kernel_id parameter in POST data")
 
     if kernel_id is not current_kernel_id:
         try:
-            ker=EstablishedKernel('kernels/%s',kernel_id)
+            ker=EstablishedKernel('kernels/{0}'.format(kernel_id))
         except IOError:
             abort(401, "could not find kernel file matching kernel_id")
     
     queryVec=ahk.queryVector(get_these,ker.labels)
     diffused=ker.diffuse(queryVec)
     sorted_diffused = sorted(diffused.items(), key=operator.itemgetter(1), reverse=True)
-    dict_out={"RankedEntities":sorted_diffused}
+    dict_out={"ranked_entities":sorted_diffused}
     return json.dumps(dict_out)
 
 run(app, host='0.0.0.0', port=5602)

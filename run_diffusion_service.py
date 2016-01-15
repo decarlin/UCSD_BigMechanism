@@ -56,7 +56,7 @@ def index(name='User'):
     else:
         return 'Hello!'
 
-@route('/relevence/<network_id>/generate_ndex_heat_kernel', method='GET')
+@route('/<network_id>/generate_ndex_heat_kernel', method='GET')
 def generate_heat_kernel(network_id):
 
     if password is not None and ousername is not None:
@@ -72,14 +72,14 @@ def generate_heat_kernel(network_id):
     
     return json.dumps({'kernel_id':str(kernel_id)})
 
-@route('/relevence/generate_network_heat_kernel', metod='POST')
+@route('/generate_network_heat_kernel', metod='POST')
 def generate_heat_kernel(network_id):
     dict=json.load(request.body)
     
     ker = kernel.SciPYKernel(dict.get('network'), time_T=opts.diffusion_time)
     
 
-@route('/relevence/rank_entities', method='POST')
+@route('/rank_entities', method='POST')
 def diffuse_and_rank():
     dict=json.load(request.body)
     get_these=dict.get('identifier_set')

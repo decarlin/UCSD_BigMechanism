@@ -188,13 +188,24 @@ class NdexToGeneSif(util.NetworkWrapper):
                 edge_list.append((s[0],s[2]))
         return edge_list
 
+    def checkType(self,term):
+        if 'name' in term.keys():
+            return 'baseterm'
+        elif 'functionTermId' in term.keys():
+            return 'functionterm'
+        elif 'edgeId' in term.keys():
+            return 'reifiededgeterm'
+        else:
+            return 'unknown'
+
     def getTermLabel(self, termId):
         if termId in self.termLabelMap:
             return self.termLabelMap[termId]
         else:
             label = "error"
             term = self.getTermById(termId)
-            type = term['type'].lower()
+            #type = term['type'].lower()
+            type=self.checkType(term)
             if type == "baseterm":
                 name = term['name']
                 if 'namespaceId' in term and term['namespaceId']:
